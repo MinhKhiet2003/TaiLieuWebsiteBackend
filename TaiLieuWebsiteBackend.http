@@ -1,0 +1,6 @@
+@TaiLieuWebsiteBackend_HostAddress = http://localhost:5168
+
+GET {{TaiLieuWebsiteBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
