@@ -144,3 +144,4 @@ C:\Users\Minh Khiet\source\repos\TaiLieuWebsiteBackend\TaiLieuWebsiteBackend\obj
 C:\Users\Minh Khiet\source\repos\TaiLieuWebsiteBackend\TaiLieuWebsiteBackend\obj\Debug\net8.0\TaiLieuWebsiteBackend.pdb
 C:\Users\Minh Khiet\source\repos\TaiLieuWebsiteBackend\TaiLieuWebsiteBackend\obj\Debug\net8.0\TaiLieuWebsiteBackend.genruntimeconfig.cache
 C:\Users\Minh Khiet\source\repos\TaiLieuWebsiteBackend\TaiLieuWebsiteBackend\obj\Debug\net8.0\ref\TaiLieuWebsiteBackend.dll
+C:\Users\Minh Khiet\source\repos\TaiLieuWebsiteBackend\TaiLieuWebsiteBackend\obj\Debug\net8.0\TaiLieuWebsiteBackend.sourcelink.json

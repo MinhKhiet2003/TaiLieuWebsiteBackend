@@ -1,20 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.Data;
 using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Response;
+using TaiLieuWebsiteBackend.Services.IServices;
 
 namespace TaiLieuWebsiteBackend.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
+        private readonly IPasswordHasherService _passwordHasher;
 
-        public UserRepository(AppDbContext context)
+        public UserRepository(AppDbContext context, IPasswordHasherService passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ApiResponse<IEnumerable<User>>> GetAllUsersAsync()
@@ -37,6 +41,15 @@ namespace TaiLieuWebsiteBackend.Repositories
         {
             try
             {
+                // Kiểm tra email đã tồn tại
+                if (await EmailExistsAsync(user.email))
+                {
+                    return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
+                }
+
+                // Chuyển mật khẩu thành hash
+                user.password_hash = _passwordHasher.HashPassword(user.password_hash);
+
                 ValidateUser(user);
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
@@ -48,10 +61,32 @@ namespace TaiLieuWebsiteBackend.Repositories
             }
         }
 
+
         public async Task<ApiResponse<object>> UpdateUserAsync(User user)
         {
             try
             {
+                var existingUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.user_id == user.user_id);
+                if (existingUser == null)
+                {
+                    return ApiResponse<object>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với ID được cung cấp.");
+                }
+
+                if (await _context.Users.AnyAsync(u => u.email == user.email && u.user_id != user.user_id))
+                {
+                    return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
+                }
+
+                user.CreatedAt = existingUser.CreatedAt;
+
+                TimeZoneInfo hanoiTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+                user.UpdatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, hanoiTimeZone);
+
+                if (user.password_hash != existingUser.password_hash)
+                {
+                    user.password_hash = _passwordHasher.HashPassword(user.password_hash);
+                }
+
                 ValidateUser(user);
                 _context.Entry(user).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -62,6 +97,9 @@ namespace TaiLieuWebsiteBackend.Repositories
                 return ApiResponse<object>.Error(400, "Lỗi xác thực", ex.Message);
             }
         }
+
+
+
 
         public async Task<ApiResponse<object>> DeleteUserAsync(int id)
         {
@@ -109,6 +147,31 @@ namespace TaiLieuWebsiteBackend.Repositories
             {
                 throw new ValidationException("Tên đăng nhập phải có ít nhất 3 ký tự.");
             }
+        }
+
+        public async Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return ApiResponse<object>.Error(404, "User not found", "Not Found");
+            }
+
+            if (!_passwordHasher.VerifyPassword(oldPassword, user.password_hash))
+            {
+                return ApiResponse<object>.Error(400, "Old password is incorrect", "Bad Request");
+            }
+
+            user.password_hash = _passwordHasher.HashPassword(newPassword);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return ApiResponse<object>.Success(204, "Password changed successfully", null);
+        }
+        public async Task<ApiResponse<int>> GetUserCountAsync()
+        {
+            int count = await _context.Users.CountAsync();
+            return ApiResponse<int>.Success(200, "Lấy tổng số lượng người dùng thành công", count);
         }
     }
 }

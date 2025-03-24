@@ -159,5 +159,88 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             return Ok(response.Data);
         }
+
+        [HttpPut("profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UserUpdateDto userUpdateDto)
+        {
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest(ApiResponse<object>.Error(400, "Authorization header is missing or invalid", "Bad Request"));
+            }
+
+            string token = authHeader.Substring(7);
+            var user = await _userService.FetchAsync(token);
+
+            if (user == null)
+            {
+                return NotFound(ApiResponse<object>.Error(404, "User not found", "Not Found"));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (user.email != userUpdateDto.Email && await _userService.EmailExistsAsync(userUpdateDto.Email))
+            {
+                return BadRequest(new { success = false, errorMessage = "Email đã tồn tại" });
+            }
+
+            user.username = userUpdateDto.Username;
+            user.email = userUpdateDto.Email;
+            user.ProfilePicturePath = userUpdateDto.ProfilePicturePath;
+
+            var response = await _userService.UpdateUserAsync(user);
+            if (response.StatusCode != 204)
+            {
+                return StatusCode(response.StatusCode, response.ErrorMessage);
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            string authHeader = Request.Headers["Authorization"];
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest(ApiResponse<object>.Error(400, "Authorization header is missing or invalid", "Bad Request"));
+            }
+
+            string token = authHeader.Substring(7);
+            var user = await _userService.FetchAsync(token);
+
+            if (user == null)
+            {
+                return NotFound(ApiResponse<object>.Error(404, "User not found", "Not Found"));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = await _userService.ChangePasswordAsync(user.user_id, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
+            if (response.StatusCode != 204)
+            {
+                return StatusCode(response.StatusCode, response.ErrorMessage);
+            }
+
+            return NoContent();
+        }
+        [HttpGet("count")]
+        public async Task<IActionResult> GetUserCount()
+        {
+            var response = await _userService.GetUserCountAsync();
+            if (response.StatusCode != 200)
+            {
+                return StatusCode(response.StatusCode, response.ErrorMessage);
+            }
+
+            return Ok(response.Data);
+        }
+
     }
 }

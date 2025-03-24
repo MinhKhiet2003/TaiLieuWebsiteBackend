@@ -7,6 +7,7 @@ using TaiLieuWebsiteBackend.Response;
 using TaiLieuWebsiteBackend.Services.IServices;
 using TaiLieuWebsiteBackend.Component;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaiLieuWebsiteBackend.Services
 {
@@ -122,8 +123,10 @@ namespace TaiLieuWebsiteBackend.Services
             var user = response.Data;
             var profile = new ProfileDto
             {
-                Nickname = user.username,
-                Avatar = user.ProfilePicturePath
+                Username = user.username,
+                Avatar = user.ProfilePicturePath,
+                Role = user.role,
+                Email = user.email
             };
 
             return ApiResponse<ProfileDto>.Success(200, "Profile retrieved successfully", profile);
@@ -131,6 +134,15 @@ namespace TaiLieuWebsiteBackend.Services
         public async Task<bool> EmailExistsAsync(string email)
         {
             return await _userRepository.EmailExistsAsync(email);
+        }
+
+        public async Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword)
+        {
+            return await _userRepository.ChangePasswordAsync(userId, oldPassword, newPassword);
+        }
+        public async Task<ApiResponse<int>> GetUserCountAsync()
+        {
+            return await _userRepository.GetUserCountAsync();
         }
     }
 }

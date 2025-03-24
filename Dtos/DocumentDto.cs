@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public string file_path { get; set; }
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public int UploadedBy { get; set; }
         public DateTime UpdatedAt { get; set; }
 
