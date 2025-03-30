@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.Dtos;
@@ -25,13 +27,73 @@ namespace TaiLieuWebsiteBackend.Services
                 Id = c.category_id,
                 Name = c.name,
                 Description = c.description,
-                ClassId = c.class_id
+                ClassId = c.class_id,
+                UploadedBy = c.uploaded_by,
+                UploadedByUsername = c.User?.username,
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.UpdatedAt
+
             }).ToList();
         }
 
         public async Task<CategoryDto> GetCategoryByIdAsync(int id)
         {
-            var category = await _categoryRepository.GetCategoryByIdAsync(id);
+            var category = await _categoryRepository.GetCategoryByIdAsync(id); 
+            if (category == null)
+            {
+                return null;
+            }
+            return new CategoryDto
+            {
+                Id = category.category_id,
+                Name = category.name,
+                Description = category.description,
+                ClassId = category.class_id,
+                UploadedBy = category.uploaded_by,
+                UploadedByUsername = category.User?.username,
+                CreatedAt = category.CreatedAt,
+                UpdatedAt = category.UpdatedAt
+            };
+        }
+
+        public async Task AddCategoryAsync(Category category)
+        {
+             await _categoryRepository.AddCategoryAsync(category);
+        }
+
+        public async Task UpdateCategoryAsync(Category category)
+        {
+               await _categoryRepository.UpdateCategoryAsync(category);
+        }
+
+        public async Task<IEnumerable<CategoryDto>> SearchCategoriesAsync(string keyword)
+        {
+            var categories = await _categoryRepository.SearchCategoriesAsync(keyword);
+            return categories
+                .Where(c => c.name.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                .Select(c => new CategoryDto
+                {
+                    Id = c.category_id,
+                    Name = c.name,
+                    Description = c.description,
+                    ClassId = c.class_id
+                })
+                .ToList();
+        }
+
+        public async Task DeleteCategoryAsync(int id)
+        {
+             await _categoryRepository.DeleteCategoryAsync(id);
+        }
+
+        public async Task<CategoryDto> GetCategoryByNameAsync(string name)
+        {
+            var category = await _categoryRepository.GetCategoryByName(name);
+            if (category == null)
+            {
+                return null;
+            }
+
             return new CategoryDto
             {
                 Id = category.category_id,
@@ -40,60 +102,33 @@ namespace TaiLieuWebsiteBackend.Services
                 ClassId = category.class_id
             };
         }
-
-        public async Task<CategoryDto> AddCategoryAsync(CategoryDto categoryDto)
+        public async Task<IEnumerable<CategoryDto>> GetCategoriesByClassIdAsync(int classId)
         {
-            var category = new Category
-            {
-                category_id = categoryDto.Id,
-                name = categoryDto.Name,
-                description = categoryDto.Description,
-                class_id = categoryDto.ClassId
-            };
-            var newCategory = await _categoryRepository.AddCategoryAsync(category);
-            return new CategoryDto
-            {
-                Id = newCategory.category_id,
-                Name = newCategory.name,
-                Description = newCategory.description,
-                ClassId = newCategory.class_id
-            };
-        }
-
-        public async Task<CategoryDto> UpdateCategoryAsync(CategoryDto categoryDto)
-        {
-            var category = new Category
-            {
-                category_id = categoryDto.Id,
-                name = categoryDto.Name,
-                description = categoryDto.Description,
-                class_id = categoryDto.ClassId
-            };
-            var updatedCategory = await _categoryRepository.UpdateCategoryAsync(category);
-            return new CategoryDto
-            {
-                Id = updatedCategory.category_id,
-                Name = updatedCategory.name,
-                Description = updatedCategory.description,
-                ClassId = updatedCategory.class_id
-            };
-        }
-
-        public async Task<IEnumerable<CategoryDto>> SearchCategoriesAsync(string keyword)
-        {
-            var categories = await _categoryRepository.SearchCategoriesAsync(keyword);
+            var categories = await _categoryRepository.GetCategoriesByClassIdAsync(classId);
             return categories.Select(c => new CategoryDto
             {
                 Id = c.category_id,
                 Name = c.name,
                 Description = c.description,
-                ClassId = c.class_id
+                ClassId = c.class_id,
+                UploadedBy = c.uploaded_by,
+                UploadedByUsername = c.User?.username, 
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.UpdatedAt
             }).ToList();
         }
-
-        public async Task DeleteCategoryAsync(int id)
+        public async Task<IEnumerable<ClassDto>> GetUsedClassesAsync()
         {
-            await _categoryRepository.DeleteCategoryAsync(id);
+            var classes = await _categoryRepository.GetUsedClassesAsync();
+            return classes.Select(c => new ClassDto
+            {
+                Id = c.class_id,
+                Name = c.name
+            }).ToList();
+        }
+        public async Task<Dictionary<int, int>> CountCategoriesByClassAsync()
+        {
+            return await _categoryRepository.CountCategoriesByClassAsync();
         }
     }
 }

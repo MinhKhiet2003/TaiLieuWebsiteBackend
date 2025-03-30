@@ -1,4 +1,5 @@
-﻿using TaiLieuWebsiteBackend.Models;
+﻿using TaiLieuWebsiteBackend.DTOs;
+using TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Repositories.IRepositories
 {
@@ -6,8 +7,9 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
     {
         Task<IEnumerable<Game>> GetAllGamesAsync();
         Task<Game> GetGameByIdAsync(int id);
-        Task<Game> AddGameAsync(Game game);
-        Task<Game> UpdateGameAsync(Game game);
+        Task AddGameAsync(Game game);
+        Task UpdateGameAsync(Game game);
         Task DeleteGameAsync(int id);
+        Task<IEnumerable<Game>> SearchGamesAsync(string? name, int? categoryId, int? classId);
     }
 }

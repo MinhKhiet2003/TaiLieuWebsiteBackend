@@ -123,6 +123,7 @@ namespace TaiLieuWebsiteBackend.Services
             var user = response.Data;
             var profile = new ProfileDto
             {
+                Id = user.user_id,
                 Username = user.username,
                 Avatar = user.ProfilePicturePath,
                 Role = user.role,
@@ -144,6 +145,11 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _userRepository.GetUserCountAsync();
         }
+        public async Task<IEnumerable<User>> SearchUsersAsync(string keyword)
+        {
+            return await _userRepository.SearchUsersAsync(keyword);
+        }
+
     }
 }
 

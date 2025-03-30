@@ -17,5 +17,6 @@ public interface IUserService
     Task<ApiResponse<LoginResponse>> LoginUserAsync(UserLoginDto userLoginDto);
     Task<bool> EmailExistsAsync(string email);
     Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword);
+    Task<IEnumerable<User>> SearchUsersAsync(string keyword);
 }
 

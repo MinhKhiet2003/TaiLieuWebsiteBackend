@@ -1,5 +1,6 @@
 ﻿using TaiLieuWebsiteBackend.Dtos;
 using TaiLieuWebsiteBackend.DTOs;
+using TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Services.IServices
 {
@@ -7,10 +8,13 @@ namespace TaiLieuWebsiteBackend.Services.IServices
     {
         Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync();
         Task<CategoryDto> GetCategoryByIdAsync(int id);
-        Task<CategoryDto> AddCategoryAsync(CategoryDto categoryDto);
-        Task<CategoryDto> UpdateCategoryAsync(CategoryDto categoryDto);
+        Task AddCategoryAsync(Category category);
+        Task UpdateCategoryAsync(Category category);
         Task DeleteCategoryAsync(int id);
         Task<IEnumerable<CategoryDto>> SearchCategoriesAsync(string keyword);
-
+        Task<CategoryDto> GetCategoryByNameAsync(string name);
+        Task<IEnumerable<CategoryDto>> GetCategoriesByClassIdAsync(int classId);
+        Task<IEnumerable<ClassDto>> GetUsedClassesAsync();
+        Task<Dictionary<int, int>> CountCategoriesByClassAsync();
     }
 }

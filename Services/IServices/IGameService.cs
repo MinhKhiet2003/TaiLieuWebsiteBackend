@@ -1,4 +1,5 @@
 ﻿using TaiLieuWebsiteBackend.DTOs;
+using TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Services.IServices
 {
@@ -6,8 +7,9 @@ namespace TaiLieuWebsiteBackend.Services.IServices
     {
         Task<IEnumerable<GameDto>> GetAllGamesAsync();
         Task<GameDto> GetGameByIdAsync(int id);
-        Task<GameDto> AddGameAsync(GameDto gameDto);
-        Task<GameDto> UpdateGameAsync(GameDto gameDto);
+        Task AddGameAsync(Game game);
+        Task UpdateGameAsync(Game game);
         Task DeleteGameAsync(int id);
+        Task<IEnumerable<GameDto>> SearchGamesAsync(string? name, int? categoryId, int? classId);
     }
 }

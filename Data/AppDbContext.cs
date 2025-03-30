@@ -16,6 +16,9 @@ namespace TaiLieuWebsiteBackend.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Star> Stars { get; set; }
+        public DbSet<Life> Lifes { get; set; }
+        public DbSet<Comic> Comics { get; set; }
+
 
 
 
@@ -28,6 +31,35 @@ namespace TaiLieuWebsiteBackend.Data
                 .HasOne(v => v.Class)
                 .WithMany(c => c.Categories)
                 .HasForeignKey(v => v.class_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Category>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.uploaded_by)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Comic>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.Uploaded_by)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comic>()
+                .HasOne(c => c.Category)
+                .WithMany(c => c.Comics)
+                .HasForeignKey(c => c.Category_id)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Life>()
+                .HasOne(l => l.User)
+                .WithMany()
+                .HasForeignKey(l => l.Uploaded_by)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Life>()
+                .HasOne(l => l.Category)
+                .WithMany(c => c.Lifes)
+                .HasForeignKey(l => l.Category_id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Document>()

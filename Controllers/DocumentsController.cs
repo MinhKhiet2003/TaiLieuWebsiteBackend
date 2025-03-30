@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TaiLieuWebsiteBackend.Dtos;
 using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Services.IServices;
+using TaiLieuWebsiteBackend.Repositories.IRepositories;
 
 namespace TaiLieuWebsiteBackend.Controllers
 {
@@ -13,10 +14,14 @@ namespace TaiLieuWebsiteBackend.Controllers
     public class DocumentController : ControllerBase
     {
         private readonly IDocumentService _documentService;
+        private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public DocumentController(IDocumentService documentService)
+        public DocumentController(IDocumentService documentService, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _documentService = documentService;
+            _userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
@@ -36,16 +41,8 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
             return Ok(document);
         }
-
-        [HttpGet("search")]
-        public ActionResult<IEnumerable<DocumentDto>> SearchDocuments([FromQuery] string title, [FromQuery] int? categoryId, [FromQuery] string uploadedByUsername)
-        {
-            var documents = _documentService.SearchDocuments(title, categoryId, uploadedByUsername);
-            return Ok(documents);
-        }
-
         [HttpPost]
-        public ActionResult AddDocument([FromBody] DocumentDto documentDto)
+        public ActionResult AddDocument([FromBody] CreateUpdateDocumentDto documentDto)
         {
             var document = new Document
             {
@@ -54,36 +51,44 @@ namespace TaiLieuWebsiteBackend.Controllers
                 file_path = documentDto.file_path,
                 category_id = documentDto.CategoryId,
                 uploaded_by = documentDto.UploadedBy,
-                CreatedAt = documentDto.CreatedAt,
-                UpdatedAt = documentDto.UpdatedAt
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
 
-            _documentService.AddDocument(document);
-            return CreatedAtAction(nameof(GetDocumentById), new { id = document.document_id }, document);
+            try
+            {
+                _documentService.AddDocument(document);
+                return CreatedAtAction(nameof(GetDocumentById), new { id = document.document_id }, document);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateDocument(int id, [FromBody] DocumentDto documentDto)
+        public ActionResult UpdateDocument(int id, [FromBody] CreateUpdateDocumentDto documentDto)
         {
-            if (id != documentDto.Id)
-            {
-                return BadRequest();
-            }
-
             var document = new Document
             {
-                document_id = documentDto.Id,
+                document_id = id,
                 title = documentDto.Title,
                 description = documentDto.Description,
                 file_path = documentDto.file_path,
                 category_id = documentDto.CategoryId,
                 uploaded_by = documentDto.UploadedBy,
-                CreatedAt = documentDto.CreatedAt,
-                UpdatedAt = documentDto.UpdatedAt
+                UpdatedAt = DateTime.Now
             };
 
-            _documentService.UpdateDocument(document);
-            return NoContent();
+            try
+            {
+                _documentService.UpdateDocument(document);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -92,5 +97,15 @@ namespace TaiLieuWebsiteBackend.Controllers
             _documentService.DeleteDocument(id);
             return NoContent();
         }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchDocuments(
+            [FromQuery] string? name,
+            [FromQuery] int? categoryId,
+            [FromQuery] int? classId)
+        {
+            var documents = await _documentService.SearchDocumentsAsync(name, categoryId, classId);
+            return Ok(documents);
+        }
+
     }
 }
