@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.Dtos;
+using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Services.IServices;
 
 namespace TaiLieuWebsiteBackend.Controllers
@@ -38,26 +39,71 @@ namespace TaiLieuWebsiteBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> AddCategory([FromBody] CreateUpdateCategoryDto categoryDto)
         {
-            if (!ModelState.IsValid)
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            var existingCategories = categories.FirstOrDefault(c => string.Equals(c.Name, categoryDto.Name, StringComparison.OrdinalIgnoreCase) && c.ClassId == categoryDto.ClassId);
+
+            if (existingCategories != null)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Đã có danh mục có tiêu đề tương tự trong hệ thống!" });
             }
-            var newCategory = await _categoryService.AddCategoryAsync(categoryDto);
-            return CreatedAtAction(nameof(GetCategoryById), new { id = newCategory.Id }, newCategory);
+
+                var category = new Category
+            {
+                name = categoryDto.Name,
+                description = categoryDto.Description,
+                class_id = categoryDto.ClassId,
+                uploaded_by = categoryDto.UploadedBy,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            try
+            {
+                 await _categoryService.AddCategoryAsync(category);
+                return CreatedAtAction(nameof(GetCategoryById), new { id = category.category_id }, category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CreateUpdateCategoryDto categoryDto)
         {
-            if (id != categoryDto.Id)
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            var existingCategory = categories
+                .FirstOrDefault(c => string.Equals(c.Name, categoryDto.Name, StringComparison.OrdinalIgnoreCase) && c.Id != id && c.ClassId == categoryDto.ClassId);
+
+            if (existingCategory != null)
             {
-                return BadRequest();
+                return BadRequest(new { message = "Đã có Danh mục có tiêu đề tương tự trong danh mục này!" });
             }
-            var updatedCategory = await _categoryService.UpdateCategoryAsync(categoryDto);
-            return Ok(updatedCategory);
+            
+            var category = new Category
+            {
+                category_id = id,
+                name = categoryDto.Name,
+                description = categoryDto.Description,
+                class_id = categoryDto.ClassId,
+                uploaded_by = categoryDto.UploadedBy,
+                UpdatedAt = DateTime.Now
+            };
+
+            try
+            {
+                await _categoryService.UpdateCategoryAsync(category);
+                return Ok(category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
@@ -72,5 +118,29 @@ namespace TaiLieuWebsiteBackend.Controllers
             var categories = await _categoryService.SearchCategoriesAsync(keyword);
             return Ok(categories);
         }
+
+        [HttpGet("by-class/{classId}")]
+        public async Task<IActionResult> GetCategoriesByClassId(int classId)
+        {
+            var categories = await _categoryService.GetCategoriesByClassIdAsync(classId);
+            if (categories == null || !categories.Any())
+            {
+                return NotFound("Không tìm thấy danh mục nào cho classId này.");
+            }
+            return Ok(categories);
+        }
+        [HttpGet("used-classes")]
+        public async Task<IActionResult> GetUsedClasses()
+        {
+            var classes = await _categoryService.GetUsedClassesAsync();
+            return Ok(classes);
+        }
+        [HttpGet("count-by-class")]
+        public async Task<IActionResult> CountCategoriesByClass()
+        {
+            var counts = await _categoryService.CountCategoriesByClassAsync();
+            return Ok(counts);
+        }
+
     }
 }

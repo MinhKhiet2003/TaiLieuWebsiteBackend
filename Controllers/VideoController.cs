@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaiLieuWebsiteBackend.Dtos;
 using TaiLieuWebsiteBackend.Models;
+using TaiLieuWebsiteBackend.Services.IServices;
+using TaiLieuWebsiteBackend.Repositories.IRepositories;
 using TaiLieuWebsiteBackend.Services;
+using System.Linq;
 
 namespace TaiLieuWebsiteBackend.Controllers
 {
@@ -12,83 +17,98 @@ namespace TaiLieuWebsiteBackend.Controllers
     public class VideoController : ControllerBase
     {
         private readonly IVideoService _videoService;
+        private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public VideoController(IVideoService videoService)
+        public VideoController(IVideoService videoService, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _videoService = videoService;
+            _userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Video>> GetAllVideos()
+        public ActionResult<IEnumerable<VideoDto>> GetAllVideos()
         {
-            return Ok(_videoService.GetAllVideos());
+            var videos = _videoService.GetAllVideos();
+            return Ok(videos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<VideoDTO> GetVideoById(int id)
+        public ActionResult<VideoDto> GetVideoById(int id)
         {
             var video = _videoService.GetVideoById(id);
             if (video == null)
             {
                 return NotFound();
             }
-
-            var videoDTO = new VideoDTO
-            {
-                video_id = video.video_id,
-                video_url = video.video_url,
-                title = video.title,
-                description = video.description,
-                category_id = video.category_id,
-                uploaded_by = video.uploaded_by,
-                created_at = video.CreatedAt,
-                updated_at = video.UpdatedAt
-            };
-
-            return Ok(videoDTO);
+            return Ok(video);
         }
-
 
         [HttpPost]
-        public ActionResult AddVideo([FromBody] VideoDTO videoDTO)
+        public ActionResult AddVideo([FromBody] CreateUpdateVideoDto videoDto)
         {
-            var video = new Video
-            {
-                video_url = videoDTO.video_url,
-                title = videoDTO.title,
-                category_id = videoDTO.category_id,
-                uploaded_by = videoDTO.uploaded_by,
-                CreatedAt = videoDTO.created_at,
-                UpdatedAt = videoDTO.created_at,
-                description = videoDTO.description ?? ""
-            };
+            var existingVideo = _videoService.GetAllVideos()
+                .FirstOrDefault(v => v.title == videoDto.title && v.category_id == videoDto.category_id);
 
-            _videoService.AddVideo(video);
-            return CreatedAtAction(nameof(GetVideoById), new { id = video.video_id }, video);
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult UpdateVideo(int id, [FromBody] VideoDTO videoDTO)
-        {
-            if (id != videoDTO.video_id)
+            if (existingVideo != null)
             {
-                return BadRequest();
+                return BadRequest(new { message = "Đã có video có tiêu đề tương tự trong danh mục này!" });
             }
 
             var video = new Video
             {
-                video_id = videoDTO.video_id,
-                video_url = videoDTO.video_url,
-                title = videoDTO.title,
-                category_id = videoDTO.category_id,
-                uploaded_by = videoDTO.uploaded_by,
-                CreatedAt = videoDTO.created_at,
-                UpdatedAt = videoDTO.updated_at,
-                description = videoDTO.description ?? ""
+                title = videoDto.title,
+                description = videoDto.description,
+                video_url = videoDto.video_url,
+                category_id = videoDto.category_id,
+                uploaded_by = videoDto.uploaded_by,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
             };
 
-            _videoService.UpdateVideo(video);
-            return NoContent();
+            try
+            {
+                _videoService.AddVideo(video);
+                return CreatedAtAction(nameof(GetVideoById), new { id = video.video_id }, video);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateVideo(int id, [FromBody] CreateUpdateVideoDto videoDto)
+        {
+            var existingVideo = _videoService.GetAllVideos()
+                .FirstOrDefault(v => v.title == videoDto.title && v.category_id == videoDto.category_id && v.video_id != id);
+
+            if (existingVideo != null)
+            {
+                return BadRequest(new { message = "Đã có video có tiêu đề tương tự trong danh mục này!" });
+            }
+
+            var video = new Video
+            {
+                video_id = id,
+                title = videoDto.title,
+                description = videoDto.description,
+                video_url = videoDto.video_url,
+                category_id = videoDto.category_id,
+                uploaded_by = videoDto.uploaded_by,
+                UpdatedAt = DateTime.Now
+            };
+
+            try
+            {
+                _videoService.UpdateVideo(video);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
@@ -96,6 +116,16 @@ namespace TaiLieuWebsiteBackend.Controllers
         {
             _videoService.DeleteVideo(id);
             return NoContent();
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchVideos(
+            [FromQuery] string? name,
+            [FromQuery] int? categoryId,
+            [FromQuery] int? classId)
+        {
+            var videos = await _videoService.SearchVideosAsync(name, categoryId, classId);
+            return Ok(videos);
         }
     }
 }

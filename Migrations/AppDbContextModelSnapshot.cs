@@ -17,7 +17,7 @@ namespace TaiLieuWebsiteBackend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -50,9 +50,19 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("uploaded_by")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("user_id")
+                        .HasColumnType("int");
+
                     b.HasKey("category_id");
 
                     b.HasIndex("class_id");
+
+                    b.HasIndex("uploaded_by");
+
+                    b.HasIndex("user_id");
 
                     b.ToTable("Categories");
                 });
@@ -80,6 +90,49 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.HasKey("class_id");
 
                     b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comic_url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Uploaded_by")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category_id");
+
+                    b.HasIndex("Uploaded_by");
+
+                    b.ToTable("Comics");
                 });
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comment", b =>
@@ -258,6 +311,45 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.ToTable("Games");
                 });
 
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Life", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Category_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("Uploaded_by")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category_id");
+
+                    b.HasIndex("Uploaded_by");
+
+                    b.ToTable("Lifes");
+                });
+
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Star", b =>
                 {
                     b.Property<int>("star_id")
@@ -366,6 +458,8 @@ namespace TaiLieuWebsiteBackend.Migrations
 
                     b.HasIndex("category_id");
 
+                    b.HasIndex("uploaded_by");
+
                     b.ToTable("Videos");
                 });
 
@@ -377,7 +471,38 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("uploaded_by")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TaiLieuWebsiteBackend.Models.User", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("user_id");
+
                     b.Navigation("Class");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comic", b =>
+                {
+                    b.HasOne("TaiLieuWebsiteBackend.Models.Category", "Category")
+                        .WithMany("Comics")
+                        .HasForeignKey("Category_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Uploaded_by")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comment", b =>
@@ -472,6 +597,25 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Life", b =>
+                {
+                    b.HasOne("TaiLieuWebsiteBackend.Models.Category", "Category")
+                        .WithMany("Lifes")
+                        .HasForeignKey("Category_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Uploaded_by")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Star", b =>
                 {
                     b.HasOne("TaiLieuWebsiteBackend.Models.Document", "Document")
@@ -523,16 +667,28 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("uploaded_by")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Category", b =>
                 {
+                    b.Navigation("Comics");
+
                     b.Navigation("Documents");
 
                     b.Navigation("Exercises");
 
                     b.Navigation("Games");
+
+                    b.Navigation("Lifes");
 
                     b.Navigation("Videos");
                 });
@@ -559,6 +715,11 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Stars");
+                });
+
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.User", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Video", b =>

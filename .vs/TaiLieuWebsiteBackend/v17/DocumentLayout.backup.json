@@ -1,0 +1,211 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\videocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\videocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\gameservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\gamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\gamerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\documentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\documentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\documentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\documentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\videoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\videoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\dtos\\gamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:dtos\\gamedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\videorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\videorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs*",
+              "RelativeToolTip": "Program.cs*",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T14:40:23.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DocumentService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\DocumentService.cs",
+              "RelativeDocumentMoniker": "Services\\DocumentService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\DocumentService.cs",
+              "RelativeToolTip": "Services\\DocumentService.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAkwFYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T12:27:44.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DocumentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\DocumentRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\DocumentRepository.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\DocumentRepository.cs",
+              "RelativeToolTip": "Repositories\\DocumentRepository.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAkwCMAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T12:27:18.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DocumentsController.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\DocumentsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DocumentsController.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\DocumentsController.cs",
+              "RelativeToolTip": "Controllers\\DocumentsController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAkwEoAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T12:26:12.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "VideoService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\VideoService.cs",
+              "RelativeDocumentMoniker": "Services\\VideoService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\VideoService.cs",
+              "RelativeToolTip": "Services\\VideoService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T10:45:12.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "VideoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\VideoRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\VideoRepository.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\VideoRepository.cs",
+              "RelativeToolTip": "Repositories\\VideoRepository.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAiwCIAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T10:22:21.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GameRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\GameRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\GameRepository.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\GameRepository.cs",
+              "RelativeToolTip": "Repositories\\GameRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T10:05:27.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\GameService.cs",
+              "RelativeDocumentMoniker": "Services\\GameService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\GameService.cs",
+              "RelativeToolTip": "Services\\GameService.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAiwFcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T09:57:10.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GameDto.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\GameDto.cs",
+              "RelativeDocumentMoniker": "Dtos\\GameDto.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\GameDto.cs",
+              "RelativeToolTip": "Dtos\\GameDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T09:54:04.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\GameController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\GameController.cs",
+              "RelativeToolTip": "Controllers\\GameController.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAqwGgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T09:51:45.804Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VideoController.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\VideoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\VideoController.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\VideoController.cs",
+              "RelativeToolTip": "Controllers\\VideoController.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAqwHEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-27T08:41:44.278Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

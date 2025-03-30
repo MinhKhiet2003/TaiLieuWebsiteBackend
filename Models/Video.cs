@@ -22,11 +22,11 @@ namespace TaiLieuWebsiteBackend.Models
         // Khóa ngoại đến bảng Categories
         [ForeignKey("Category")]
         public int category_id { get; set; }
-        public Category Category;
+        public Category Category { get; set; }
         // Khóa ngoại đến bảng Users
         [ForeignKey("User")]
         public int uploaded_by { get; set; }
-        public User User;
+        public User User { get; set; }
         public ICollection<Star> Stars { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }

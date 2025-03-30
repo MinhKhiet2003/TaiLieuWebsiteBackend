@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using TaiLieuWebsiteBackend.Component.Middleware;
 using TaiLieuWebsiteBackend.Repositories.IRepositories;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +76,31 @@ builder.Services.AddAuthorization(options =>
     //options.AddPolicy("AdminPolicy", policy => policy.RequireRole("admin"));
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CanModifyVideo", policy =>
+        policy.RequireAssertion(context =>
+        {
+            // Lấy role và user id từ claims
+            var isAdmin = context.User.IsInRole("admin");
+            var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Lấy video từ route data (cần truyền video vào context)
+            if (context.Resource is HttpContext httpContext)
+            {
+                var videoId = httpContext.Request.RouteValues["id"]?.ToString();
+                if (!string.IsNullOrEmpty(videoId) && int.TryParse(videoId, out var id))
+                {
+                    var videoService = httpContext.RequestServices.GetRequiredService<IVideoService>();
+                    var video = videoService.GetVideoById(id);
+                    if (video == null) return false;
+
+                    return isAdmin || userId == video.uploaded_by.ToString();
+                }
+            }
+            return false;
+        }));
+});
 // Register custom services
 builder.Services.AddSingleton<JwtTokenUtil>();
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
@@ -92,9 +118,16 @@ builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 builder.Services.AddScoped<IVideoService, VideoService>();
+builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IClassRepository, ClassRepository>();
+builder.Services.AddScoped<ILifeService, LifeService>();
+builder.Services.AddScoped<ILifeRepository, LifeRepository>();
+builder.Services.AddScoped<IComicRepository, ComicRepository>();
+builder.Services.AddScoped<IComicService, ComicService>();
 
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddAutoMapper(typeof(Program));
+
 
 // Add controllers and Swagger
 builder.Services.AddControllers();

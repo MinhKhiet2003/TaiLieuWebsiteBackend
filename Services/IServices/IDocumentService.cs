@@ -13,7 +13,8 @@ namespace TaiLieuWebsiteBackend.Services.IServices
         void AddDocument(Document document);
         void UpdateDocument(Document document);
         void DeleteDocument(int id);
-        IEnumerable<DocumentDto> SearchDocuments(string title = null, int? categoryId = null, string uploadedByUsername = null);
+        Task<IEnumerable<DocumentDto>> SearchDocumentsAsync(string name, int? categoryId, int? classId);
+
     }
 
 }

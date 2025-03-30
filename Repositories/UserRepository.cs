@@ -173,5 +173,19 @@ namespace TaiLieuWebsiteBackend.Repositories
             int count = await _context.Users.CountAsync();
             return ApiResponse<int>.Success(200, "Lấy tổng số lượng người dùng thành công", count);
         }
+
+        public User GetUserByUsername(string username)
+        {
+            return _context.Users.FirstOrDefault(u => u.username == username);
+        }
+        public async Task<IEnumerable<User>> SearchUsersAsync(string keyword)
+        {
+            return await _context.Users
+                .Where(u => u.username.Contains(keyword) ||
+                            u.email.Contains(keyword) ||
+                            u.role.Contains(keyword))
+                .ToListAsync();
+        }
+
     }
 }

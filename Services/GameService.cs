@@ -19,11 +19,13 @@ public class GameService : IGameService
         return games.Select(g => new GameDto
         {
             Id = g.game_id,
-            Title = g.title,
-            Description = g.description,
-            GameUrl = g.game_url,
-            CategoryId = g.category_id,
-            UploadedBy = g.uploaded_by,
+            title = g.title,
+            description = g.description,
+            gameUrl = g.game_url,
+            category_id = g.category_id,
+            category_name = g.Category?.name,
+            uploaded_by = g.uploaded_by,
+            UploadedByUsername = g.User?.username,
             CreatedAt = g.CreatedAt,
             UpdatedAt = g.UpdatedAt
         }).ToList();
@@ -40,56 +42,71 @@ public class GameService : IGameService
         return new GameDto
         {
             Id = game.game_id,
-            Title = game.title,
-            Description = game.description,
-            GameUrl = game.game_url,
-            CategoryId = game.category_id,
-            UploadedBy = game.uploaded_by,
+            title = game.title,
+            description = game.description,
+            gameUrl = game.game_url,
+            category_id = game.category_id,
+            category_name = game.Category?.name,
+            uploaded_by = game.uploaded_by,
+            UploadedByUsername = game.User?.username,
             CreatedAt = game.CreatedAt,
             UpdatedAt = game.UpdatedAt
         };
     }
 
-    public async Task<GameDto> AddGameAsync(GameDto gameDto)
+    public async Task AddGameAsync(Game game)
     {
-        var game = new Game
-        {
-            title = gameDto.Title,
-            description = gameDto.Description,
-            game_url = gameDto.GameUrl,
-            category_id = gameDto.CategoryId,
-            uploaded_by = gameDto.UploadedBy,
-            CreatedAt = gameDto.CreatedAt,
-            UpdatedAt = gameDto.UpdatedAt
-        };
 
-        var addedGame = await _gameRepository.AddGameAsync(game);
-        gameDto.Id = addedGame.game_id;
-        return gameDto;
+        await _gameRepository.AddGameAsync(game);
     }
 
-    public async Task<GameDto> UpdateGameAsync(GameDto gameDto)
+    public async Task UpdateGameAsync(Game game)
     {
-        var game = await _gameRepository.GetGameByIdAsync(gameDto.Id);
-        if (game == null)
+        var existingGame = await _gameRepository.GetGameByIdAsync(game.game_id);
+        if (existingGame == null)
         {
-            return null;
+            throw new Exception("Game không tồn tại!");
         }
 
-        game.title = gameDto.Title;
-        game.description = gameDto.Description;
-        game.game_url = gameDto.GameUrl;
-        game.category_id = gameDto.CategoryId;
-        game.uploaded_by = gameDto.UploadedBy;
-        game.CreatedAt = gameDto.CreatedAt;
-        game.UpdatedAt = gameDto.UpdatedAt;
+        var duplicateGame = (await _gameRepository.SearchGamesAsync(game.title, game.category_id, null))
+            .FirstOrDefault(g => g.game_id != game.game_id);
+        if (duplicateGame != null)
+        {
+            throw new Exception("Đã có game có tiêu đề tương tự trong danh mục này!");
+        }
 
-        await _gameRepository.UpdateGameAsync(game);
-        return gameDto;
+        // Cập nhật tất cả các trường
+        existingGame.title = game.title;
+        existingGame.description = game.description;
+        existingGame.game_url = game.game_url;
+        existingGame.category_id = game.category_id;
+        existingGame.uploaded_by = game.uploaded_by;
+        existingGame.UpdatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
+
+        await _gameRepository.UpdateGameAsync(existingGame);
     }
+
+
 
     public async Task DeleteGameAsync(int id)
     {
         await _gameRepository.DeleteGameAsync(id);
+    }
+    public async Task<IEnumerable<GameDto>> SearchGamesAsync(string? name, int? categoryId, int? classId)
+    {
+        var videos = await _gameRepository.SearchGamesAsync(name, categoryId, classId);
+        return videos.Select(g => new GameDto
+        {
+            Id = g.game_id,
+            title = g.title,
+            description = g.description,
+            gameUrl = g.game_url,
+            category_id = g.category_id,
+            category_name = g.Category?.name,
+            uploaded_by = g.uploaded_by,
+            UploadedByUsername = g.User?.username,
+            CreatedAt = g.CreatedAt,
+            UpdatedAt = g.UpdatedAt
+        });
     }
 }

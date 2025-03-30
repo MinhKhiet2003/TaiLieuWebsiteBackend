@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TaiLieuWebsiteBackend.Models
 {
@@ -24,10 +25,25 @@ namespace TaiLieuWebsiteBackend.Models
         // Khóa ngoại đến bảng Categories
         [ForeignKey("Class")]
         public int class_id { get; set; }
+        [JsonIgnore]
         public Class Class { get; set; }
+
+        // Khóa ngoại đến bảng Users
+        [ForeignKey("User")]
+        public int uploaded_by { get; set; }
+        [JsonIgnore]
+        public User User { get; set; }
+        [JsonIgnore]
         public ICollection<Document> Documents { get; set; }
+        [JsonIgnore]
         public ICollection<Video> Videos { get; set; }
+        [JsonIgnore]
         public ICollection<Exercise> Exercises { get; set; }
+        [JsonIgnore]
         public ICollection<Game> Games { get; set; }
+        [JsonIgnore]
+        public ICollection<Comic> Comics { get; set; }
+        [JsonIgnore]
+        public ICollection<Life> Lifes { get; set; }
     }
 }

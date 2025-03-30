@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TaiLieuWebsiteBackend.Models
 {
@@ -28,5 +29,7 @@ namespace TaiLieuWebsiteBackend.Models
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        [JsonIgnore]
+        public ICollection<Category>? Categories { get; set; }
     }
 }

@@ -13,4 +13,7 @@ public interface IUserRepository
     Task<bool> EmailExistsAsync(string email);
     Task<ApiResponse<User>> GetUserByUsernameOrEmailAsync(string usernameOrEmail);
     Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword);
+    User GetUserByUsername(string username);
+    Task<IEnumerable<User>> SearchUsersAsync(string keyword);
+
 }

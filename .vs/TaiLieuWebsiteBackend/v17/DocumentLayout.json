@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\dtos\\document\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|solutionrelative:dtos\\document\\documentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\models\\life.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:models\\life.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED957438-86C7-447C-BD63-9060DF57EE02}|TaiLieuWebsiteBackend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\models\\comic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:models\\comic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +30,75 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DocumentDto.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\Document\\DocumentDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\Document\\DocumentDto.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\Document\\DocumentDto.cs",
-              "RelativeToolTip": "Dtos\\Document\\DocumentDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAiAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Comic.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Comic.cs",
+              "RelativeDocumentMoniker": "Models\\Comic.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Comic.cs",
+              "RelativeToolTip": "Models\\Comic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T16:16:48.721Z",
+              "WhenOpened": "2025-03-28T02:20:56.399Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DocumentController.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\DocumentController.cs",
-              "RelativeDocumentMoniker": "Controllers\\DocumentController.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\DocumentController.cs",
-              "RelativeToolTip": "Controllers\\DocumentController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAIwCsAAAAvAAAAAAAAAA==",
+              "Title": "Life.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Life.cs",
+              "RelativeDocumentMoniker": "Models\\Life.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Life.cs",
+              "RelativeToolTip": "Models\\Life.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T16:14:02.991Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthenticationController.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\AuthenticationController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthenticationController.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\AuthenticationController.cs",
-              "RelativeToolTip": "Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAawDcAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T15:45:55.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T15:38:02.004Z",
+              "WhenOpened": "2025-03-28T02:20:43.292Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-14T15:39:15.202Z",
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwB4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-28T02:19:55.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "Models\\Category.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Models\\Category.cs",
+              "RelativeToolTip": "Models\\Category.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwB0AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-28T02:15:53.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAADwv4sAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-28T02:12:33.947Z",
               "EditorCaption": ""
             }
           ]

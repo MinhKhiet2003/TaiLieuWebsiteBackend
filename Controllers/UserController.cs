@@ -242,5 +242,24 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(response.Data);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchUsers([FromQuery] string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return BadRequest("Keyword cannot be empty.");
+            }
+
+            var users = await _userService.SearchUsersAsync(keyword);
+
+            if (!users.Any())
+            {
+                return NotFound("No users found.");
+            }
+
+            return Ok(users);
+        }
+
+
     }
 }

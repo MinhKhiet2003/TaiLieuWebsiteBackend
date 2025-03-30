@@ -13,6 +13,8 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         void DeleteDocument(int id);
         IEnumerable<Document> GetDocumentsByUploaderUsername(string username);
         IEnumerable<Document> SearchDocuments(string title = null, int? categoryId = null, string uploadedByUsername = null);
+        Task<IEnumerable<Document>> SearchDocumentsAsync(string name, int? categoryId, int? classId);
+
     }
 
 }

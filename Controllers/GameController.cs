@@ -1,31 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TaiLieuWebsiteBackend.DTOs;
-using TaiLieuWebsiteBackend.Services.IServices;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TaiLieuWebsiteBackend.Dtos;
+using TaiLieuWebsiteBackend.Models;
+using TaiLieuWebsiteBackend.Services.IServices;
+using TaiLieuWebsiteBackend.Repositories.IRepositories;
+using TaiLieuWebsiteBackend.DTOs;
 
 namespace TaiLieuWebsiteBackend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _gameService = gameService;
+            _userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllGames()
+        public async Task<ActionResult<IEnumerable<GameDto>>> GetAllGames()
         {
             var games = await _gameService.GetAllGamesAsync();
             return Ok(games);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetGameById(int id)
+        public async Task<ActionResult<GameDto>> GetGameById(int id)
         {
             var game = await _gameService.GetGameByIdAsync(id);
             if (game == null)
@@ -36,37 +46,79 @@ namespace TaiLieuWebsiteBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddGame([FromBody] GameDto gameDto)
+        public async Task<ActionResult> AddGame([FromBody] CreateUpdateGameDto gameDto)
         {
-            if (!ModelState.IsValid)
+            var games = await _gameService.GetAllGamesAsync();
+            var existingGame = games.FirstOrDefault(g => g.title == gameDto.title && g.category_id == gameDto.category_id);
+
+            if (existingGame != null)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Đã có game có tiêu đề tương tự trong danh mục này!" });
             }
-            var newGame = await _gameService.AddGameAsync(gameDto);
-            return CreatedAtAction(nameof(GetGameById), new { id = newGame.Id }, newGame);
+
+            var game = new Game
+            {
+                title = gameDto.title,
+                description = gameDto.description,
+                game_url = gameDto.gameUrl,
+                category_id = gameDto.category_id,
+                uploaded_by = gameDto.uploaded_by,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            try
+            {
+                await _gameService.AddGameAsync(game);
+                return CreatedAtAction(nameof(GetGameById), new { id = game.game_id }, game);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGame(int id, [FromBody] GameDto gameDto)
+        public async Task<ActionResult> UpdateGame(int id, [FromBody] CreateUpdateGameDto gameDto)
         {
-            if (id != gameDto.Id)
+            try
             {
-                return BadRequest();
+                var game = new Game
+                {
+                    game_id = id,
+                    title = gameDto.title,
+                    description = gameDto.description,
+                    game_url = gameDto.gameUrl,
+                    category_id = gameDto.category_id,
+                    uploaded_by = gameDto.uploaded_by
+                };
+
+                await _gameService.UpdateGameAsync(game);
+                return NoContent();
             }
-            var updatedGame = await _gameService.UpdateGameAsync(gameDto);
-            if (updatedGame == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(new { message = ex.Message });
             }
-            return Ok(updatedGame);
         }
 
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGame(int id)
+        public ActionResult DeleteGame(int id)
         {
-            await _gameService.DeleteGameAsync(id);
+            _gameService.DeleteGameAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchGames(
+            [FromQuery] string? name,
+            [FromQuery] int? categoryId,
+            [FromQuery] int? classId)
+        {
+            var games = await _gameService.SearchGamesAsync(name, categoryId, classId);
+            return Ok(games);
         }
     }
 }
-
