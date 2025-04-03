@@ -50,6 +50,11 @@ namespace TaiLieuWebsiteBackend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            if (await _userService.UsernameExistsAsync(user.username))
+            {
+                return BadRequest("Username đã tồn tại");
+            }
+
             var response = await _userService.AddUserAsync(user);
             if (response.StatusCode != 201)
                 return StatusCode(response.StatusCode, response.ErrorMessage);
@@ -62,20 +67,28 @@ namespace TaiLieuWebsiteBackend.Controllers
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
             if (id != user.user_id)
-                return BadRequest("ID người dùng không khớp");
+                return BadRequest(new { success = false, error = "ID người dùng không khớp" });
 
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors) });
 
             var userExistsResponse = await _userService.UserExistsAsync(id);
             if (!userExistsResponse.Data)
-                return NotFound("Người dùng không tồn tại");
+                return NotFound(new { success = false, error = "Người dùng không tồn tại" });
+
+            // Kiểm tra username trùng với user khác
+            var existingUserResponse = await _userService.GetUserByIdAsync(id);
+            if (existingUserResponse.Data.username != user.username
+                && await _userService.UsernameExistsAsync(user.username))
+            {
+                return BadRequest(new { success = false, error = "Username đã tồn tại" });
+            }
 
             var response = await _userService.UpdateUserAsync(user);
-            if (response.StatusCode != 204)
-                return StatusCode(response.StatusCode, response.ErrorMessage);
+            if (response.StatusCode != 200)
+                return StatusCode(response.StatusCode, new { success = false, error = response.ErrorMessage });
 
-            return NoContent();
+            return Ok(new { success = true, message = "Cập nhật thành công" });
         }
 
 
@@ -109,6 +122,10 @@ namespace TaiLieuWebsiteBackend.Controllers
             if (await _userService.EmailExistsAsync(userRegisterDto.Email))
             {
                 return BadRequest(new { success = false, errorMessage = "không được trùng Email" });
+            }
+            if (await _userService.UsernameExistsAsync(userRegisterDto.Username))
+            {
+                return BadRequest(new { success = false, errorMessage = "Username đã tồn tại" });
             }
 
             var response = await _userService.RegisterUserAsync(userRegisterDto);
@@ -187,6 +204,10 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return BadRequest(new { success = false, errorMessage = "Email đã tồn tại" });
             }
 
+            if (user.username != userUpdateDto.Username && await _userService.UsernameExistsAsync(userUpdateDto.Username))
+            {
+                return BadRequest(new { success = false, errorMessage = "Username đã tồn tại" });
+            }
             user.username = userUpdateDto.Username;
             user.email = userUpdateDto.Email;
             user.ProfilePicturePath = userUpdateDto.ProfilePicturePath;

@@ -81,5 +81,19 @@ namespace TaiLieuWebsiteBackend.Repositories
 
             return await query.ToListAsync();
         }
+        public async Task<IEnumerable<VideoDto>> GetVideosByCategoryIdAsync(int categoryId)
+        {
+            return await Task.FromResult(_context.Videos.Where(v => v.category_id == categoryId).Select(v => new VideoDto
+            {
+                video_id = v.video_id,
+                title = v.title,
+                description = v.description,
+                video_url = v.video_url,
+                category_id = v.category_id,
+                uploaded_by = v.uploaded_by,
+                created_at = v.CreatedAt,
+                updated_at = v.UpdatedAt
+            }).ToList());
+        }
     }
 }

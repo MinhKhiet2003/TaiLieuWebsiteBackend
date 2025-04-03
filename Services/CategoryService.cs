@@ -130,5 +130,25 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _categoryRepository.CountCategoriesByClassAsync();
         }
+        public async Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesByResourceTypeAsync(string resourceType, int? classId = null)
+        {
+            if (!new[] { "document", "game", "video", "comic" }.Contains(resourceType.ToLower()))
+            {
+                throw new ArgumentException("Invalid resource type. Valid values are 'document', 'game', 'video','comic'");
+            }
+
+            var categories = await _categoryRepository.GetUsedCategoriesByResourceTypeAsync(resourceType, classId);
+
+            return categories.Select(c => new CategorySimpleDto
+            {
+                Id = c.category_id,
+                Name = c.name
+            });
+        }
+
+        public async Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesSimpleAsync(int? classId = null)
+        {
+            return await _categoryRepository.GetUsedCategoriesSimpleAsync(classId);
+        }
     }
 }

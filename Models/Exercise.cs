@@ -12,7 +12,8 @@ namespace TaiLieuWebsiteBackend.Models
         public string difficulty { get; set; } // Mức độ khó ('easy', 'medium', 'hard'), kiểu VARCHAR(20)
 
         public string description { get; set; }
-
+        [Required]
+        [MaxLength(5000)]
         public string title { get; set; }
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

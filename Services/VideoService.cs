@@ -87,5 +87,14 @@ namespace TaiLieuWebsiteBackend.Services
                 updated_at = v.UpdatedAt
             });
         }
+        public async Task<IEnumerable<VideoDto>> GetVideosByCategoryIdAsync(int categoryId)
+        {
+            return await _videoRepository.GetVideosByCategoryIdAsync(categoryId);
+        }
+        public async Task<IEnumerable<int>> GetUsedCategoryIdsAsync()
+        {
+            var videos = _videoRepository.GetAllVideos();
+            return videos.Select(v => v.category_id).Distinct();
+        }
     }
 }

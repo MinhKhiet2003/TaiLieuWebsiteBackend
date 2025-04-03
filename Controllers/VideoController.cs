@@ -127,5 +127,39 @@ namespace TaiLieuWebsiteBackend.Controllers
             var videos = await _videoService.SearchVideosAsync(name, categoryId, classId);
             return Ok(videos);
         }
+
+        [AllowAnonymous]
+        [HttpGet("random")]
+        public ActionResult<IEnumerable<VideoDto>> GetRandomVideos()
+        {
+            var videos = _videoService.GetAllVideos()
+                                      .OrderBy(v => Guid.NewGuid())
+                                      .Take(3)
+                                      .Select(v => new VideoDto
+                                      {
+                                          video_id = v.video_id,
+                                          title = v.title,
+                                          description = v.description,
+                                          video_url = v.video_url,
+                                          category_id = v.category_id,
+                                          uploaded_by = v.uploaded_by,
+                                          UploadedByUsername = v.UploadedByUsername ?? "Không xác định",
+                                          created_at = v.created_at,
+                                          updated_at = v.updated_at
+                                      })
+                                      .ToList();
+
+            return Ok(videos);
+        }
+        [HttpGet("category/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<VideoDto>>> GetVideosByCategoryId(int categoryId)
+        {
+            var videos = await _videoService.GetVideosByCategoryIdAsync(categoryId);
+            if (videos == null || !videos.Any())
+            {
+                return NotFound("No videos found for the given category ID.");
+            }
+            return Ok(videos);
+        }
     }
 }

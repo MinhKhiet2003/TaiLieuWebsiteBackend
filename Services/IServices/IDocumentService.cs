@@ -14,7 +14,8 @@ namespace TaiLieuWebsiteBackend.Services.IServices
         void UpdateDocument(Document document);
         void DeleteDocument(int id);
         Task<IEnumerable<DocumentDto>> SearchDocumentsAsync(string name, int? categoryId, int? classId);
-
+        IEnumerable<DocumentDto> GetDocumentsByCategoryId(int categoryId);
+        Task<IEnumerable<int>> GetUsedCategoryIdsAsync();
     }
 
 }

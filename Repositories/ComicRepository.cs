@@ -87,5 +87,13 @@ namespace TaiLieuWebsiteBackend.Repositories
 
             return await query.ToListAsync();
         }
+        public IEnumerable<Comic> GetComicsByCategoryId(int categoryId)
+        {
+            return _context.Comics
+                .Include(c => c.Category)
+                .Include(c => c.User)
+                .Where(c => c.Category_id == categoryId)
+                .ToList();
+        }
     }
 }

@@ -122,12 +122,49 @@
   },
   {
     "ContainingType": "TaiLieuWebsiteBackend.Controllers.CategoriesController",
+    "Method": "GetUsedCategoriesByResourceType",
+    "RelativePath": "api/Categories/used-by-type",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resourceType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "classId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.CategoriesController",
     "Method": "GetUsedClasses",
     "RelativePath": "api/Categories/used-classes",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.CategoriesController",
+    "Method": "GetUsedCategoriesSimple",
+    "RelativePath": "api/Categories/used-simple",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "classId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -238,6 +275,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.ComicController",
+    "Method": "GetComicsByCategoryId",
+    "RelativePath": "api/Comic/category/{categoryId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.Dtos.ComicDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "TaiLieuWebsiteBackend.Controllers.ComicController",
@@ -445,6 +508,52 @@
   },
   {
     "ContainingType": "TaiLieuWebsiteBackend.Controllers.DocumentController",
+    "Method": "GetDocumentsByCategoryId",
+    "RelativePath": "api/Document/category/{categoryId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.Dtos.DocumentDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.DocumentController",
+    "Method": "GetRandomDocuments",
+    "RelativePath": "api/Document/random",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.Dtos.DocumentDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.DocumentController",
     "Method": "SearchDocuments",
     "RelativePath": "api/Document/search",
     "HttpMethod": "GET",
@@ -646,6 +755,52 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.GameController",
+    "Method": "GetGamesByCategoryId",
+    "RelativePath": "api/Game/category/{categoryId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.DTOs.GameDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.GameController",
+    "Method": "GetRandomGames",
+    "RelativePath": "api/Game/random",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.DTOs.GameDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "TaiLieuWebsiteBackend.Controllers.GameController",
@@ -1075,6 +1230,52 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.VideoController",
+    "Method": "GetVideosByCategoryId",
+    "RelativePath": "api/Video/category/{categoryId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.Models.VideoDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TaiLieuWebsiteBackend.Controllers.VideoController",
+    "Method": "GetRandomVideos",
+    "RelativePath": "api/Video/random",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TaiLieuWebsiteBackend.Models.VideoDto, TaiLieuWebsiteBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "TaiLieuWebsiteBackend.Controllers.VideoController",

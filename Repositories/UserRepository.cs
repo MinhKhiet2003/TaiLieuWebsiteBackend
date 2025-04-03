@@ -46,10 +46,6 @@ namespace TaiLieuWebsiteBackend.Repositories
                 {
                     return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
                 }
-
-                // Chuyển mật khẩu thành hash
-                user.password_hash = _passwordHasher.HashPassword(user.password_hash);
-
                 ValidateUser(user);
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
@@ -66,29 +62,34 @@ namespace TaiLieuWebsiteBackend.Repositories
         {
             try
             {
-                var existingUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.user_id == user.user_id);
+                var existingUser = await _context.Users.FindAsync(user.user_id);
                 if (existingUser == null)
                 {
                     return ApiResponse<object>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với ID được cung cấp.");
                 }
 
+                // Kiểm tra email trùng
                 if (await _context.Users.AnyAsync(u => u.email == user.email && u.user_id != user.user_id))
                 {
                     return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
                 }
 
-                user.CreatedAt = existingUser.CreatedAt;
+                // Cập nhật các trường thay đổi
+                existingUser.username = user.username;
+                existingUser.email = user.email;
+                existingUser.role = user.role;
+                existingUser.ProfilePicturePath = user.ProfilePicturePath;
+                existingUser.UpdatedAt = DateTime.Now;
 
-                TimeZoneInfo hanoiTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
-                user.UpdatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, hanoiTimeZone);
-
-                if (user.password_hash != existingUser.password_hash)
+                // Chỉ hash password nếu nó thay đổi
+                if (!string.IsNullOrEmpty(user.password_hash)
+                    && user.password_hash != existingUser.password_hash)
                 {
-                    user.password_hash = _passwordHasher.HashPassword(user.password_hash);
+                    existingUser.password_hash = _passwordHasher.HashPassword(user.password_hash);
                 }
 
-                ValidateUser(user);
-                _context.Entry(user).State = EntityState.Modified;
+                ValidateUser(existingUser);
+                _context.Users.Update(existingUser);
                 await _context.SaveChangesAsync();
                 return ApiResponse<object>.Success(200, "Cập nhật người dùng thành công", null);
             }
@@ -96,8 +97,11 @@ namespace TaiLieuWebsiteBackend.Repositories
             {
                 return ApiResponse<object>.Error(400, "Lỗi xác thực", ex.Message);
             }
+            catch (DbUpdateException ex)
+            {
+                return ApiResponse<object>.Error(500, "Lỗi cơ sở dữ liệu", ex.InnerException?.Message ?? ex.Message);
+            }
         }
-
 
 
 
@@ -186,6 +190,9 @@ namespace TaiLieuWebsiteBackend.Repositories
                             u.role.Contains(keyword))
                 .ToListAsync();
         }
-
+        public async Task<bool> UsernameExistsAsync(string username)
+        {
+            return await _context.Users.AnyAsync(u => u.username == username);
+        }
     }
 }

@@ -109,4 +109,24 @@ public class GameService : IGameService
             UpdatedAt = g.UpdatedAt
         });
     }
+    public async Task<IEnumerable<GameDto>> GetGamesByCategoryIdAsync(int categoryId)
+    {
+        var games = await _gameRepository.GetGamesByCategoryIdAsync(categoryId);
+        return games.Select(g => new GameDto
+        {
+            Id = g.game_id,
+            title = g.title,
+            description = g.description,
+            gameUrl = g.game_url,
+            category_id = g.category_id,
+            uploaded_by = g.uploaded_by,
+            CreatedAt = g.CreatedAt,
+            UpdatedAt = g.UpdatedAt
+        }).ToList();
+    }
+    public async Task<IEnumerable<int>> GetUsedCategoryIdsAsync()
+    {
+        var games = await _gameRepository.GetAllGamesAsync();
+        return games.Select(g => g.category_id).Distinct();
+    }
 }

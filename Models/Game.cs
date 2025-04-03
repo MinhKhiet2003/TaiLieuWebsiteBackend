@@ -10,7 +10,8 @@ namespace TaiLieuWebsiteBackend.Models
 
         public string game_url { get; set; } 
         public string description { get; set; }
-
+        [Required]
+        [MaxLength(5000)]
         public string title { get; set; }
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

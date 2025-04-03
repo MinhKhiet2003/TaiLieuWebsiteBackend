@@ -11,7 +11,7 @@ namespace TaiLieuWebsiteBackend.Models
         public int category_id { get; set; } 
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(5000)]
         public string name { get; set; } // Tên danh mục, kiểu VARCHAR(50)
 
         public string description { get; set; } // Mô tả về danh mục, kiểu TEXT

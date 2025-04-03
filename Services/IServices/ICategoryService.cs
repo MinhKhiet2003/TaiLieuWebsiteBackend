@@ -16,5 +16,7 @@ namespace TaiLieuWebsiteBackend.Services.IServices
         Task<IEnumerable<CategoryDto>> GetCategoriesByClassIdAsync(int classId);
         Task<IEnumerable<ClassDto>> GetUsedClassesAsync();
         Task<Dictionary<int, int>> CountCategoriesByClassAsync();
+        Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesByResourceTypeAsync(string resourceType, int? classId = null);
+        Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesSimpleAsync(int? classId = null);
     }
 }

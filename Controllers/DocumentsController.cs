@@ -107,5 +107,45 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(documents);
         }
 
+        [AllowAnonymous]
+        [HttpGet("random")]
+        public ActionResult<IEnumerable<DocumentDto>> GetRandomDocuments()
+        {
+            var documents = _documentService.GetAllDocuments()
+                                            .OrderBy(d => Guid.NewGuid()) 
+                                            .Take(3) 
+                                            .Select(d => new DocumentDto
+                                            {
+                                                Id = d.Id,
+                                                Title = d.Title,
+                                                Description = d.Description,
+                                                file_path = d.file_path,
+                                                CategoryId = d.CategoryId,
+                                                UploadedBy = d.UploadedBy ,
+                                                UploadedByUsername = d.UploadedByUsername ?? "Không xác định",
+                                                CreatedAt = d.CreatedAt,
+                                                UpdatedAt = d.UpdatedAt
+                                            })
+                                            .ToList();
+
+            return Ok(documents);
+        }
+        [HttpGet("category/{categoryId}")]
+        public ActionResult<IEnumerable<DocumentDto>> GetDocumentsByCategoryId(int categoryId)
+        {
+            try
+            {
+                var documents = _documentService.GetDocumentsByCategoryId(categoryId);
+                if (documents == null || !documents.Any())
+                {
+                    return NotFound("No documents found for the given category ID.");
+                }
+                return Ok(documents);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while fetching documents.", error = ex.Message });
+            }
+        }
     }
 }

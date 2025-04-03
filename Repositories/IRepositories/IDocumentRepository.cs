@@ -14,7 +14,7 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         IEnumerable<Document> GetDocumentsByUploaderUsername(string username);
         IEnumerable<Document> SearchDocuments(string title = null, int? categoryId = null, string uploadedByUsername = null);
         Task<IEnumerable<Document>> SearchDocumentsAsync(string name, int? categoryId, int? classId);
-
+        IEnumerable<Document> GetDocumentsByCategoryId(int categoryId);
     }
 
 }

@@ -130,5 +130,22 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpGet("category/{categoryId}")]
+        public ActionResult<IEnumerable<ComicDto>> GetComicsByCategoryId(int categoryId)
+        {
+            try
+            {
+                var comics = _comicService.GetComicsByCategoryId(categoryId);
+                if (comics == null || !comics.Any())
+                {
+                    return NotFound("No comics found for the given category ID.");
+                }
+                return Ok(comics);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while fetching comics.", error = ex.Message });
+            }
+        }
     }
 }

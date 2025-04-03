@@ -12,5 +12,6 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         void UpdateComic(Comic comic);
         void DeleteComic(int id);
         Task<IEnumerable<Comic>> SearchComicsAsync(string? title, int? categoryId, int? classId);
+        IEnumerable<Comic> GetComicsByCategoryId(int categoryId);
     }
 }

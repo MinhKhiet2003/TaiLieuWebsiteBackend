@@ -10,7 +10,7 @@ namespace TaiLieuWebsiteBackend.Models
         public int document_id { get; set; } 
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(5000)]
         public string title { get; set; } 
 
         public string description { get; set; } 
