@@ -5,7 +5,7 @@ namespace TaiLieuWebsiteBackend.Dtos
     public class UserUpdateDto
     {
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Username { get; set; }
 
         [EmailAddress]
