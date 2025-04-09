@@ -15,5 +15,6 @@ public interface IUserRepository
     Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword);
     User GetUserByUsername(string username);
     Task<IEnumerable<User>> SearchUsersAsync(string keyword);
+    Task<bool> UsernameExistsAsync(string username);
 
 }

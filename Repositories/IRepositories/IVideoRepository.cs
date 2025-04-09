@@ -11,5 +11,6 @@ namespace TaiLieuWebsiteBackend.Repositories
         void UpdateVideo(Video video);
         void DeleteVideo(int id);
         Task<IEnumerable<Video>> SearchVideosAsync(string? name, int? categoryId, int? classId);
+        Task<IEnumerable<VideoDto>> GetVideosByCategoryIdAsync(int categoryId);
     }
 }

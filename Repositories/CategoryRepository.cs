@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.Data;
+using TaiLieuWebsiteBackend.Dtos;
 using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Repositories.IRepositories;
 
@@ -122,6 +123,55 @@ namespace TaiLieuWebsiteBackend.Repositories
                 .GroupBy(c => c.class_id)
                 .Select(g => new { ClassId = g.Key, Count = g.Count() })
                 .ToDictionaryAsync(g => g.ClassId, g => g.Count);
+        }
+
+        public async Task<IEnumerable<Category>> GetUsedCategoriesByResourceTypeAsync(string resourceType, int? classId = null)
+        {
+            IQueryable<Category> query = _context.Categories;
+
+            query = resourceType.ToLower() switch
+            {
+                "document" => query.Where(c => _context.Documents.Any(d => d.category_id == c.category_id)),
+                "game" => query.Where(c => _context.Games.Any(g => g.category_id == c.category_id)),
+                "video" => query.Where(c => _context.Videos.Any(v => v.category_id == c.category_id)),
+                "comic" => query.Where(c => _context.Comics.Any(v => v.Category_id == c.category_id)),
+                _ => throw new ArgumentException("Invalid resource type")
+            };
+
+            // Thêm điều kiện lọc theo classId nếu có
+            if (classId.HasValue)
+            {
+                query = query.Where(c => c.class_id == classId.Value);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesSimpleAsync(int? classId = null)
+        {
+            var usedCategoryIds = await _context.Documents.Select(d => d.category_id)
+                .Union(_context.Games.Select(g => g.category_id))
+                .Union(_context.Videos.Select(v => v.category_id))
+                .Union(_context.Comics.Select(c => c.Category_id))
+                .Distinct()
+                .ToListAsync();
+
+            var query = _context.Categories
+                .Where(c => usedCategoryIds.Contains(c.category_id));
+
+            // Thêm điều kiện lọc theo classId nếu có
+            if (classId.HasValue)
+            {
+                query = query.Where(c => c.class_id == classId.Value);
+            }
+
+            return await query
+                .Select(c => new CategorySimpleDto
+                {
+                    Id = c.category_id,
+                    Name = c.name
+                })
+                .ToListAsync();
         }
     }
 }

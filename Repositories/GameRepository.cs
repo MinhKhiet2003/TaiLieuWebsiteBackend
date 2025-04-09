@@ -71,4 +71,10 @@ public class GameRepository : IGameRepository
 
         return await query.ToListAsync();
     }
+    public async Task<IEnumerable<Game>> GetGamesByCategoryIdAsync(int categoryId)
+    {
+        return await _context.Games
+            .Where(g => g.category_id == categoryId)
+            .ToListAsync();
+    }
 }

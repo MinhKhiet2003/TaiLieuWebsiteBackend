@@ -141,6 +141,18 @@ namespace TaiLieuWebsiteBackend.Controllers
             var counts = await _categoryService.CountCategoriesByClassAsync();
             return Ok(counts);
         }
+        [HttpGet("used-by-type")]
+        public async Task<IActionResult> GetUsedCategoriesByResourceType([FromQuery] string resourceType, [FromQuery] int? classId)
+        {
+            var categories = await _categoryService.GetUsedCategoriesByResourceTypeAsync(resourceType, classId);
+            return Ok(categories);
+        }
 
+        [HttpGet("used-simple")]
+        public async Task<IActionResult> GetUsedCategoriesSimple([FromQuery] int? classId)
+        {
+            var categories = await _categoryService.GetUsedCategoriesSimpleAsync(classId);
+            return Ok(categories);
+        }
     }
 }

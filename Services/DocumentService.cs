@@ -106,5 +106,25 @@ namespace TaiLieuWebsiteBackend.Services
                 UpdatedAt = d.UpdatedAt
             }).ToList();
         }
+        public IEnumerable<DocumentDto> GetDocumentsByCategoryId(int categoryId)
+        {
+            var documents = _documentRepository.GetDocumentsByCategoryId(categoryId);
+            return documents.Select(d => new DocumentDto
+            {
+                Id = d.document_id,
+                Title = d.title,
+                Description = d.description,
+                file_path = d.file_path,
+                CategoryId = d.category_id,
+                UploadedBy = d.uploaded_by,
+                CreatedAt = d.CreatedAt,
+                UpdatedAt = d.UpdatedAt
+            }).ToList();
+        }
+        public async Task<IEnumerable<int>> GetUsedCategoryIdsAsync()
+        {
+            var documents = _documentRepository.GetAllDocuments();
+            return documents.Select(d => d.category_id).Distinct();
+        }
     }
 }

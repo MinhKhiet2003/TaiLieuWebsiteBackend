@@ -17,5 +17,7 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         Task<Category> GetCategoryByNameAndClassAsync(string name, int classId);
         Task<IEnumerable<Class>> GetUsedClassesAsync();
         Task<Dictionary<int, int>> CountCategoriesByClassAsync();
+        Task<IEnumerable<Category>> GetUsedCategoriesByResourceTypeAsync(string resourceType, int? classId = null);
+        Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesSimpleAsync(int? classId = null);
     }
 }

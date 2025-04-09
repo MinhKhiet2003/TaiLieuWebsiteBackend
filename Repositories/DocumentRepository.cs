@@ -105,5 +105,13 @@ namespace TaiLieuWebsiteBackend.Repositories
 
             return await query.ToListAsync();
         }
+        public IEnumerable<Document> GetDocumentsByCategoryId(int categoryId)
+        {
+            return _context.Documents
+                .Include(d => d.Category)
+                .Include(d => d.User)
+                .Where(d => d.category_id == categoryId)
+                .ToList();
+        }
     }
 }

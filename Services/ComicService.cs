@@ -87,5 +87,27 @@ namespace TaiLieuWebsiteBackend.Services
                 UpdatedAt = c.UpdatedAt
             });
         }
+        public async Task<IEnumerable<int>> GetUsedCategoryIdsAsync()
+        {
+            var comic =  _comicRepository.GetAllComics();
+            return comic.Select(g => g.Category_id).Distinct();
+        }
+        public IEnumerable<ComicDto> GetComicsByCategoryId(int categoryId)
+        {
+            var comics = _comicRepository.GetComicsByCategoryId(categoryId);
+            return comics.Select(c => new ComicDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Description = c.Description,
+                Comic_url = c.Comic_url,
+                Category_id = c.Category_id,
+                CategoryName = c.Category?.name,
+                Uploaded_by = c.Uploaded_by,
+                Username = c.User?.username,
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.UpdatedAt
+            });
+        }
     }
 }

@@ -9,8 +9,9 @@ namespace TaiLieuWebsiteBackend.Models
         public int video_id { get; set; } 
 
         public string video_url { get; set; } 
-        public string description { get; set; } 
-
+        public string description { get; set; }
+        [Required]
+        [MaxLength(5000)]
         public string title { get; set; }
 
         [Column("created_at")]

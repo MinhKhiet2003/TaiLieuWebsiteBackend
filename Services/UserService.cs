@@ -149,7 +149,10 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _userRepository.SearchUsersAsync(keyword);
         }
-
+        public async Task<bool> UsernameExistsAsync(string username)
+        {
+            return await _userRepository.UsernameExistsAsync(username);
+        }
     }
 }
 

@@ -10,7 +10,7 @@ namespace TaiLieuWebsiteBackend.Models
         public int user_id { get; set; } // Mã định danh duy nhất của người dùng, kiểu INT
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string username { get; set; } // Tên người dùng, kiểu VARCHAR(50)
 
         [Required]

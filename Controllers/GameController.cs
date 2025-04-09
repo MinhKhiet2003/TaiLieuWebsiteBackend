@@ -120,5 +120,45 @@ namespace TaiLieuWebsiteBackend.Controllers
             var games = await _gameService.SearchGamesAsync(name, categoryId, classId);
             return Ok(games);
         }
+        [AllowAnonymous]
+        [HttpGet("random")]
+        public async Task<ActionResult<IEnumerable<GameDto>>> GetRandomGames()
+        {
+            var games = (await _gameService.GetAllGamesAsync())
+                        .OrderBy(g => Guid.NewGuid()) 
+                        .Take(3) 
+                        .Select(g => new GameDto
+                        {
+                            Id = g.Id,
+                            title = g.title,
+                            description = g.description,
+                            gameUrl = g.gameUrl,
+                            category_id = g.category_id,
+                            uploaded_by = g.uploaded_by,
+                            UploadedByUsername = g.UploadedByUsername ?? "Không xác định",
+                            CreatedAt = g.CreatedAt,
+                            UpdatedAt = g.UpdatedAt
+                        })
+                        .ToList();
+
+            return Ok(games);
+        }
+        [HttpGet("category/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<GameDto>>> GetGamesByCategoryId(int categoryId)
+        {
+            try
+            {
+                var games = await _gameService.GetGamesByCategoryIdAsync(categoryId);
+                if (games == null || !games.Any())
+                {
+                    return NotFound("No games found for the given category ID.");
+                }
+                return Ok(games);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while fetching games.", error = ex.Message });
+            }
+        }
     }
 }
