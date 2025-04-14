@@ -10,7 +10,7 @@ namespace TaiLieuWebsiteBackend.Services.IServices
         Task AddGameAsync(Game game);
         Task UpdateGameAsync(Game game);
         Task DeleteGameAsync(int id);
-        Task<IEnumerable<GameDto>> SearchGamesAsync(string? name, int? categoryId, int? classId);
+        Task<IEnumerable<GameDto>> SearchGamesAsync(string? name, int? categoryId, int? classId, string? classify);
         Task<IEnumerable<GameDto>> GetGamesByCategoryIdAsync(int categoryId);
         Task<IEnumerable<int>> GetUsedCategoryIdsAsync();
     }

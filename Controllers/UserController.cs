@@ -146,7 +146,7 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             var response = await _userService.LoginUserAsync(userLoginDto);
             if (response.StatusCode != 200)
-                return Unauthorized(response.ErrorMessage);
+                return BadRequest(response.ErrorMessage);
 
             return Ok(new { Token = response.Data.Token, User = response.Data.User });
         }

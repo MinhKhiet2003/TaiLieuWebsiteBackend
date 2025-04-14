@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,48 +17,41 @@ namespace TaiLieuWebsiteBackend.Repositories
             _context = context;
         }
 
-        public IEnumerable<Comic> GetAllComics()
+        public async Task<IEnumerable<Comic>> GetAllComicsAsync()
         {
-            return _context.Comics.Include(c => c.Category).Include(c => c.User).ToList();
-        }
-
-        public Comic? GetComicById(int id)
-        {
-            return _context.Comics
+            return await _context.Comics
                 .Include(c => c.Category)
                 .Include(c => c.User)
-                .FirstOrDefault(c => c.Id == id);
+                .OrderByDescending(c => c.UpdatedAt).ThenByDescending(c => c.CreatedAt).ToListAsync();
         }
 
-        public void AddComic(Comic comic)
+        public async Task<Comic?> GetComicByIdAsync(int id)
+        {
+            return await _context.Comics
+                .Include(c => c.Category)
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task AddComicAsync(Comic comic)
         {
             _context.Comics.Add(comic);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateComic(Comic comic)
+        public async Task UpdateComicAsync(Comic comic)
         {
-            var existingComic = _context.Comics.Find(comic.Id);
-            if (existingComic != null)
-            {
-                existingComic.Title = comic.Title;
-                existingComic.Description = comic.Description;
-                existingComic.Comic_url = comic.Comic_url;
-                existingComic.Category_id = comic.Category_id;
-                existingComic.Uploaded_by = comic.Uploaded_by;
-                existingComic.UpdatedAt = comic.UpdatedAt;
-
-                _context.SaveChanges();
-            }
+            _context.Entry(comic).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteComic(int id)
+        public async Task DeleteComicAsync(int id)
         {
-            var comic = _context.Comics.Find(id);
+            var comic = await _context.Comics.FindAsync(id);
             if (comic != null)
             {
                 _context.Comics.Remove(comic);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -68,6 +60,7 @@ namespace TaiLieuWebsiteBackend.Repositories
             var query = _context.Comics
                 .Include(c => c.Category)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.UpdatedAt).ThenByDescending(c => c.CreatedAt)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(title))
@@ -87,13 +80,14 @@ namespace TaiLieuWebsiteBackend.Repositories
 
             return await query.ToListAsync();
         }
-        public IEnumerable<Comic> GetComicsByCategoryId(int categoryId)
+
+        public async Task<IEnumerable<Comic>> GetComicsByCategoryIdAsync(int categoryId)
         {
-            return _context.Comics
+            return await _context.Comics
                 .Include(c => c.Category)
                 .Include(c => c.User)
                 .Where(c => c.Category_id == categoryId)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

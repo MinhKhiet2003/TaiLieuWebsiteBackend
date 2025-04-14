@@ -1,67 +1,100 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaiLieuWebsiteBackend.DTOs;
+using TaiLieuWebsiteBackend.Services;
 using TaiLieuWebsiteBackend.Services.IServices;
 
 namespace TaiLieuWebsiteBackend.Controllers
 {
-    [Authorize]
-    [ApiController]
     [Route("api/[controller]")]
-    public class CommentsController : ControllerBase
+    [ApiController]
+    public class CommentController : ControllerBase
     {
         private readonly ICommentService _commentService;
 
-        public CommentsController(ICommentService commentService)
+        public CommentController(ICommentService commentService)
         {
             _commentService = commentService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllComments()
-        {
-            var comments = await _commentService.GetAllCommentsAsync();
-            return Ok(comments);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCommentById(int id)
-        {
-            var comment = await _commentService.GetCommentByIdAsync(id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            return Ok(comment);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> AddComment([FromBody] CommentDto commentDto)
+        public async Task<IActionResult> Create([FromBody] CommentCreateDto dto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var comment = await _commentService.CreateCommentAsync(
+                    dto.Content,
+                    dto.UserId,
+                    dto.DocumentId,
+                    dto.GameId,
+                    dto.VideoId,
+                    dto.ComicId
+                );
+                return Ok(comment);
             }
-            var newComment = await _commentService.AddCommentAsync(commentDto);
-            return CreatedAtAction(nameof(GetCommentById), new { id = newComment.Id }, newComment);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateComment(int id, [FromBody] CommentDto commentDto)
+        [HttpPut("{commentId}")]
+        public async Task<IActionResult> Update(int commentId, [FromBody] CommentUpdateDto dto)
         {
-            if (id != commentDto.Id)
+            try
             {
-                return BadRequest();
+                var comment = await _commentService.UpdateCommentAsync(commentId, dto.Content, dto.UserId);
+                return Ok(comment);
             }
-            var updatedComment = await _commentService.UpdateCommentAsync(commentDto);
-            return Ok(updatedComment);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComment(int id)
+        [HttpDelete("{commentId}")]
+        public async Task<IActionResult> Delete(int commentId, [FromQuery] int userId)
         {
-            await _commentService.DeleteCommentAsync(id);
-            return NoContent();
+            try
+            {
+                await _commentService.DeleteCommentAsync(commentId, userId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetComments([FromQuery] int? documentId = null,
+            [FromQuery] int? gameId = null, [FromQuery] int? videoId = null,
+            [FromQuery] int? comicId = null)
+        {
+            try
+            {
+                var comments = await _commentService.GetCommentsByIdAsync(documentId, gameId, videoId, comicId);
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("count")]
+        public async Task<IActionResult> CountComments([FromQuery] int? documentId = null,
+            [FromQuery] int? gameId = null, [FromQuery] int? videoId = null,
+            [FromQuery] int? comicId = null)
+        {
+            try
+            {
+                var count = await _commentService.CountCommentsAsync(documentId, gameId, videoId, comicId);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

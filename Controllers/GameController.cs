@@ -19,12 +19,18 @@ namespace TaiLieuWebsiteBackend.Controllers
         private readonly IGameService _gameService;
         private readonly IUserRepository _userRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public GameController(IGameService gameService, IUserRepository userRepository, ICategoryRepository categoryRepository)
+        public GameController(
+            IGameService gameService,
+            IUserRepository userRepository,
+            ICategoryRepository categoryRepository,
+            ICommentRepository commentRepository)
         {
             _gameService = gameService;
             _userRepository = userRepository;
             _categoryRepository = categoryRepository;
+            _commentRepository = commentRepository;
         }
 
         [HttpGet]
@@ -55,6 +61,8 @@ namespace TaiLieuWebsiteBackend.Controllers
             {
                 return BadRequest(new { message = "Đã có game có tiêu đề tương tự trong danh mục này!" });
             }
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); 
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
 
             var game = new Game
             {
@@ -63,8 +71,9 @@ namespace TaiLieuWebsiteBackend.Controllers
                 game_url = gameDto.gameUrl,
                 category_id = gameDto.category_id,
                 uploaded_by = gameDto.uploaded_by,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                classify = gameDto.classify,
+                CreatedAt = currentTime,
+                UpdatedAt = currentTime
             };
 
             try
@@ -91,7 +100,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                     description = gameDto.description,
                     game_url = gameDto.gameUrl,
                     category_id = gameDto.category_id,
-                    uploaded_by = gameDto.uploaded_by
+                    uploaded_by = gameDto.uploaded_by,
+                    classify = gameDto.classify
                 };
 
                 await _gameService.UpdateGameAsync(game);
@@ -115,9 +125,10 @@ namespace TaiLieuWebsiteBackend.Controllers
         public async Task<IActionResult> SearchGames(
             [FromQuery] string? name,
             [FromQuery] int? categoryId,
-            [FromQuery] int? classId)
+            [FromQuery] int? classId,
+            [FromQuery] string? classify)
         {
-            var games = await _gameService.SearchGamesAsync(name, categoryId, classId);
+            var games = await _gameService.SearchGamesAsync(name, categoryId, classId, classify);
             return Ok(games);
         }
         [AllowAnonymous]
@@ -136,8 +147,11 @@ namespace TaiLieuWebsiteBackend.Controllers
                             category_id = g.category_id,
                             uploaded_by = g.uploaded_by,
                             UploadedByUsername = g.UploadedByUsername ?? "Không xác định",
+                            classify = g.classify,
                             CreatedAt = g.CreatedAt,
-                            UpdatedAt = g.UpdatedAt
+                            UpdatedAt = g.UpdatedAt,
+                            CommentCount = g.CommentCount,
+                            AverageRating = g.AverageRating,
                         })
                         .ToList();
 

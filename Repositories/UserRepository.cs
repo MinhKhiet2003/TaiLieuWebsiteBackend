@@ -23,13 +23,13 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public async Task<ApiResponse<IEnumerable<User>>> GetAllUsersAsync()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Where(u => !u.IsDeleted).ToListAsync();
             return ApiResponse<IEnumerable<User>>.Success(200, "Lấy danh sách người dùng thành công", users);
         }
 
         public async Task<ApiResponse<User>> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.user_id == id && !u.IsDeleted);
             if (user == null)
             {
                 return ApiResponse<User>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với ID được cung cấp.");
@@ -41,19 +41,39 @@ namespace TaiLieuWebsiteBackend.Repositories
         {
             try
             {
-                // Kiểm tra email đã tồn tại
+                // Kiểm tra username và email tồn tại
+                if (await UsernameExistsAsync(user.username))
+                {
+                    return ApiResponse<object>.Error(400, "Username đã tồn tại", "Username đã được sử dụng bởi người dùng khác.");
+                }
+
                 if (await EmailExistsAsync(user.email))
                 {
                     return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
                 }
+
+                // Đặt giá trị mặc định
+                user.CreatedAt = DateTime.Now;
+                user.UpdatedAt = DateTime.Now;
+                user.IsDeleted = false;
+
                 ValidateUser(user);
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
-                return ApiResponse<object>.Success(201, "Thêm người dùng thành công", null);
+
+                return ApiResponse<object>.Success(201, "Thêm người dùng thành công", user);
             }
             catch (ValidationException ex)
             {
                 return ApiResponse<object>.Error(400, "Lỗi xác thực", ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return ApiResponse<object>.Error(500, "Lỗi cơ sở dữ liệu", ex.InnerException?.Message ?? ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<object>.Error(500, "Lỗi hệ thống", ex.Message);
             }
         }
 
@@ -68,22 +88,29 @@ namespace TaiLieuWebsiteBackend.Repositories
                     return ApiResponse<object>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với ID được cung cấp.");
                 }
 
-                // Kiểm tra email trùng
-                if (await _context.Users.AnyAsync(u => u.email == user.email && u.user_id != user.user_id))
+                // Kiểm tra username trùng (bỏ qua chính nó)
+                if (existingUser.username != user.username &&
+                    await UsernameExistsAsync(user.username))
+                {
+                    return ApiResponse<object>.Error(400, "Username đã tồn tại", "Username đã được sử dụng bởi người dùng khác.");
+                }
+
+                // Kiểm tra email trùng (bỏ qua chính nó)
+                if (existingUser.email != user.email &&
+                    await EmailExistsAsync(user.email))
                 {
                     return ApiResponse<object>.Error(400, "Email đã tồn tại", "Email đã được sử dụng bởi người dùng khác.");
                 }
 
-                // Cập nhật các trường thay đổi
+                // Cập nhật các trường
                 existingUser.username = user.username;
                 existingUser.email = user.email;
                 existingUser.role = user.role;
                 existingUser.ProfilePicturePath = user.ProfilePicturePath;
                 existingUser.UpdatedAt = DateTime.Now;
 
-                // Chỉ hash password nếu nó thay đổi
-                if (!string.IsNullOrEmpty(user.password_hash)
-                    && user.password_hash != existingUser.password_hash)
+                // Chỉ cập nhật password nếu có thay đổi và không rỗng
+                if (!string.IsNullOrEmpty(user.password_hash))
                 {
                     existingUser.password_hash = _passwordHasher.HashPassword(user.password_hash);
                 }
@@ -91,6 +118,7 @@ namespace TaiLieuWebsiteBackend.Repositories
                 ValidateUser(existingUser);
                 _context.Users.Update(existingUser);
                 await _context.SaveChangesAsync();
+
                 return ApiResponse<object>.Success(200, "Cập nhật người dùng thành công", null);
             }
             catch (ValidationException ex)
@@ -108,33 +136,39 @@ namespace TaiLieuWebsiteBackend.Repositories
         public async Task<ApiResponse<object>> DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            if (user == null || user.IsDeleted)
             {
                 return ApiResponse<object>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với ID được cung cấp.");
             }
-            _context.Users.Remove(user);
+
+            user.IsDeleted = true;
+            user.UpdatedAt = DateTime.Now;
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
+
             return ApiResponse<object>.Success(200, "Xóa người dùng thành công", null);
         }
 
         public async Task<ApiResponse<bool>> UserExistsAsync(int id)
         {
-            var exists = await _context.Users.AnyAsync(e => e.user_id == id);
+            var exists = await _context.Users.AnyAsync(e => e.user_id == id && !e.IsDeleted);
             return ApiResponse<bool>.Success(200, "Kiểm tra sự tồn tại của người dùng thành công", exists);
         }
 
         public async Task<ApiResponse<User>> GetUserByUsernameOrEmailAsync(string usernameOrEmail)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.username == usernameOrEmail || u.email == usernameOrEmail);
+            var user = await _context.Users.FirstOrDefaultAsync(u =>
+                (u.username == usernameOrEmail || u.email == usernameOrEmail) && !u.IsDeleted);
             if (user == null)
             {
                 return ApiResponse<User>.Error(404, "Không tìm thấy người dùng", "Không có người dùng nào với tên đăng nhập hoặc email được cung cấp.");
             }
             return ApiResponse<User>.Success(200, "Lấy người dùng thành công", user);
         }
+
         public async Task<bool> EmailExistsAsync(string email)
         {
-            return await _context.Users.AnyAsync(u => u.email == email);
+            return await _context.Users.AnyAsync(u => u.email == email && !u.IsDeleted);
         }
 
         private void ValidateUser(User user)
@@ -174,25 +208,27 @@ namespace TaiLieuWebsiteBackend.Repositories
         }
         public async Task<ApiResponse<int>> GetUserCountAsync()
         {
-            int count = await _context.Users.CountAsync();
+            int count = await _context.Users.CountAsync(u => !u.IsDeleted);
             return ApiResponse<int>.Success(200, "Lấy tổng số lượng người dùng thành công", count);
         }
 
         public User GetUserByUsername(string username)
         {
-            return _context.Users.FirstOrDefault(u => u.username == username);
+            return _context.Users.FirstOrDefault(u => u.username == username && !u.IsDeleted);
         }
         public async Task<IEnumerable<User>> SearchUsersAsync(string keyword)
         {
             return await _context.Users
-                .Where(u => u.username.Contains(keyword) ||
-                            u.email.Contains(keyword) ||
-                            u.role.Contains(keyword))
-                .ToListAsync();
+               .Where(u => !u.IsDeleted &&
+                   (u.username.Contains(keyword) ||
+                    u.email.Contains(keyword) ||
+                    u.role.Contains(keyword)))
+                    .ToListAsync();
         }
         public async Task<bool> UsernameExistsAsync(string username)
         {
-            return await _context.Users.AnyAsync(u => u.username == username);
+            return await _context.Users.AnyAsync(u => u.username == username && !u.IsDeleted);
         }
+
     }
 }

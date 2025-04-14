@@ -13,6 +13,8 @@
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public string Username { get; set; }
+        public int CommentCount { get; set; }
+        public double AverageRating { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

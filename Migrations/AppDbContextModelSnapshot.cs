@@ -34,6 +34,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
@@ -79,6 +82,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
@@ -114,6 +120,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -152,23 +161,28 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
+                    b.Property<int?>("comic_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("document_id")
+                    b.Property<int?>("document_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("game_id")
+                    b.Property<int?>("game_id")
                         .HasColumnType("int");
 
                     b.Property<int>("user_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("video_id")
+                    b.Property<int?>("video_id")
                         .HasColumnType("int");
 
                     b.HasKey("comment_id");
+
+                    b.HasIndex("comic_id");
 
                     b.HasIndex("document_id");
 
@@ -192,6 +206,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -236,6 +253,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -282,12 +302,19 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
                     b.Property<int>("category_id")
                         .HasColumnType("int");
+
+                    b.Property<string>("classify")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -333,6 +360,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -353,18 +383,28 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.ToTable("Lifes");
                 });
 
-            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Star", b =>
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.TaiLieuWebsiteBackend.Models.Star", b =>
                 {
                     b.Property<int>("star_id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("document_id")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("star_id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("comic_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("exercise_id")
+                    b.Property<int?>("document_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("game_id")
+                    b.Property<int?>("exercise_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("game_id")
                         .HasColumnType("int");
 
                     b.Property<int>("total_star")
@@ -373,10 +413,40 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<int>("user_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("video_id")
+                    b.Property<int?>("video_id")
                         .HasColumnType("int");
 
                     b.HasKey("star_id");
+
+                    b.HasIndex("comic_id");
+
+                    b.HasIndex("document_id");
+
+                    b.HasIndex("exercise_id");
+
+                    b.HasIndex("game_id");
+
+                    b.HasIndex("video_id");
+
+                    b.HasIndex("user_id", "comic_id")
+                        .IsUnique()
+                        .HasFilter("[comic_id] IS NOT NULL");
+
+                    b.HasIndex("user_id", "document_id")
+                        .IsUnique()
+                        .HasFilter("[document_id] IS NOT NULL");
+
+                    b.HasIndex("user_id", "exercise_id")
+                        .IsUnique()
+                        .HasFilter("[exercise_id] IS NOT NULL");
+
+                    b.HasIndex("user_id", "game_id")
+                        .IsUnique()
+                        .HasFilter("[game_id] IS NOT NULL");
+
+                    b.HasIndex("user_id", "video_id")
+                        .IsUnique()
+                        .HasFilter("[video_id] IS NOT NULL");
 
                     b.ToTable("Stars");
                 });
@@ -392,6 +462,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ProfilePicturePath")
                         .HasColumnType("nvarchar(max)");
@@ -434,6 +507,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -511,17 +587,19 @@ namespace TaiLieuWebsiteBackend.Migrations
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comment", b =>
                 {
+                    b.HasOne("TaiLieuWebsiteBackend.Models.Comic", "Comic")
+                        .WithMany()
+                        .HasForeignKey("comic_id");
+
                     b.HasOne("TaiLieuWebsiteBackend.Models.Document", "Document")
                         .WithMany("Comments")
                         .HasForeignKey("document_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.Game", "Game")
                         .WithMany("Comments")
                         .HasForeignKey("game_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
                         .WithMany()
@@ -532,8 +610,9 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.HasOne("TaiLieuWebsiteBackend.Models.Video", "Video")
                         .WithMany("Comments")
                         .HasForeignKey("video_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Comic");
 
                     b.Navigation("Document");
 
@@ -620,37 +699,40 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Star", b =>
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.TaiLieuWebsiteBackend.Models.Star", b =>
                 {
+                    b.HasOne("TaiLieuWebsiteBackend.Models.Comic", "Comic")
+                        .WithMany("Stars")
+                        .HasForeignKey("comic_id")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("TaiLieuWebsiteBackend.Models.Document", "Document")
                         .WithMany("Stars")
-                        .HasForeignKey("star_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("document_id")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.Exercise", "Exercise")
                         .WithMany("Stars")
-                        .HasForeignKey("star_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("exercise_id")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.Game", "Game")
                         .WithMany("Stars")
-                        .HasForeignKey("star_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("game_id")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("star_id")
+                        .WithMany("Stars")
+                        .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("TaiLieuWebsiteBackend.Models.Video", "Video")
                         .WithMany("Stars")
-                        .HasForeignKey("star_id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("video_id")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Comic");
 
                     b.Navigation("Document");
 
@@ -702,6 +784,11 @@ namespace TaiLieuWebsiteBackend.Migrations
                     b.Navigation("Categories");
                 });
 
+            modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Comic", b =>
+                {
+                    b.Navigation("Stars");
+                });
+
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Document", b =>
                 {
                     b.Navigation("Comments");
@@ -724,6 +811,8 @@ namespace TaiLieuWebsiteBackend.Migrations
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.User", b =>
                 {
                     b.Navigation("Categories");
+
+                    b.Navigation("Stars");
                 });
 
             modelBuilder.Entity("TaiLieuWebsiteBackend.Models.Video", b =>

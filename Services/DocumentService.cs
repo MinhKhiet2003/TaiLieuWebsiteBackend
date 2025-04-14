@@ -11,15 +11,24 @@ namespace TaiLieuWebsiteBackend.Services
     public class DocumentService : IDocumentService
     {
         private readonly IDocumentRepository _documentRepository;
-
-        public DocumentService(IDocumentRepository documentRepository)
+        private readonly ICommentRepository _commentRepository;
+        private readonly IStarRepository _starRepository;
+        public DocumentService(
+             IDocumentRepository documentRepository,
+             ICommentRepository commentRepository,
+             IStarRepository starRepository)
         {
             _documentRepository = documentRepository;
+            _commentRepository = commentRepository;
+            _starRepository = starRepository;
         }
 
         public IEnumerable<DocumentDto> GetAllDocuments()
         {
             var documents = _documentRepository.GetAllDocuments();
+            var documentIds = documents.Select(d => d.document_id).ToList();
+            var commentCounts = _commentRepository.GetCommentCountsByDocumentIds(documentIds);
+            var averageRatings = _starRepository.GetAverageRatingsByDocumentIds(documentIds);
             return documents.Select(d => new DocumentDto
             {
                 Id = d.document_id,
@@ -30,7 +39,9 @@ namespace TaiLieuWebsiteBackend.Services
                 UploadedBy = d.uploaded_by,
                 UploadedByUsername = d.User?.username ?? "Không xác định",
                 CreatedAt = d.CreatedAt,
-                UpdatedAt = d.UpdatedAt
+                UpdatedAt = d.UpdatedAt,
+                CommentCount = commentCounts.TryGetValue(d.document_id, out int count) ? count : 0,
+                AverageRating = averageRatings.TryGetValue(d.document_id, out double rating) ? rating : 0
             }).ToList();
         }
 
@@ -41,6 +52,10 @@ namespace TaiLieuWebsiteBackend.Services
             {
                 return null;
             }
+
+            var commentCount = _commentRepository.CountByDocumentIdAsync(id).Result;
+            var averageRating = _starRepository.GetAverageByDocumentIdAsync(id).Result;
+
             return new DocumentDto
             {
                 Id = document.document_id,
@@ -51,7 +66,9 @@ namespace TaiLieuWebsiteBackend.Services
                 UploadedByUsername = document.User?.username ?? "Không xác định",
                 UploadedBy = document.uploaded_by,
                 CreatedAt = document.CreatedAt,
-                UpdatedAt = document.UpdatedAt
+                UpdatedAt = document.UpdatedAt,
+                CommentCount = commentCount,
+                AverageRating = averageRating
             };
         }
 
@@ -94,6 +111,10 @@ namespace TaiLieuWebsiteBackend.Services
         public async Task<IEnumerable<DocumentDto>> SearchDocumentsAsync(string? name, int? categoryId, int? classId)
         {
             var documents = await _documentRepository.SearchDocumentsAsync(name, categoryId, classId);
+            var documentIds = documents.Select(d => d.document_id).ToList();
+            var commentCounts = _commentRepository.GetCommentCountsByDocumentIds(documentIds);
+            var averageRatings = _starRepository.GetAverageRatingsByDocumentIds(documentIds);
+
             return documents.Select(d => new DocumentDto
             {
                 Id = d.document_id,
@@ -103,12 +124,20 @@ namespace TaiLieuWebsiteBackend.Services
                 CategoryId = d.category_id,
                 UploadedBy = d.uploaded_by,
                 CreatedAt = d.CreatedAt,
-                UpdatedAt = d.UpdatedAt
+                UpdatedAt = d.UpdatedAt,
+                UploadedByUsername = d.User?.username ?? "Không xác định",
+                CommentCount = commentCounts.TryGetValue(d.document_id, out int count) ? count : 0,
+                AverageRating = averageRatings.TryGetValue(d.document_id, out double rating) ? rating : 0
             }).ToList();
         }
+
         public IEnumerable<DocumentDto> GetDocumentsByCategoryId(int categoryId)
         {
             var documents = _documentRepository.GetDocumentsByCategoryId(categoryId);
+            var documentIds = documents.Select(d => d.document_id).ToList();
+            var commentCounts = _commentRepository.GetCommentCountsByDocumentIds(documentIds);
+            var averageRatings = _starRepository.GetAverageRatingsByDocumentIds(documentIds);
+
             return documents.Select(d => new DocumentDto
             {
                 Id = d.document_id,
@@ -118,7 +147,9 @@ namespace TaiLieuWebsiteBackend.Services
                 CategoryId = d.category_id,
                 UploadedBy = d.uploaded_by,
                 CreatedAt = d.CreatedAt,
-                UpdatedAt = d.UpdatedAt
+                UpdatedAt = d.UpdatedAt,
+                CommentCount = commentCounts.TryGetValue(d.document_id, out int count) ? count : 0,
+                AverageRating = averageRatings.TryGetValue(d.document_id, out double rating) ? rating : 0
             }).ToList();
         }
         public async Task<IEnumerable<int>> GetUsedCategoryIdsAsync()

@@ -7,12 +7,15 @@
         public string description { get; set; }
         public int category_id { get; set; }
         public int uploaded_by { get; set; }
+        public string classify { get; set; }
     }
     public class GameDto : CreateUpdateGameDto
     {
         public int Id { get; set; }
         public string UploadedByUsername { get; set; }
         public string category_name { get; set; }
+        public int CommentCount { get; set; }
+        public double AverageRating { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

@@ -1,31 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 using System.Text;
+using TaiLieuWebsiteBackend.Component;
+using TaiLieuWebsiteBackend.Component.Middleware;
 using TaiLieuWebsiteBackend.Data;
 using TaiLieuWebsiteBackend.Repositories;
+using TaiLieuWebsiteBackend.Repositories.IRepositories;
 using TaiLieuWebsiteBackend.Services;
 using TaiLieuWebsiteBackend.Services.IServices;
-using TaiLieuWebsiteBackend.Component;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using TaiLieuWebsiteBackend.Component.Middleware;
-using TaiLieuWebsiteBackend.Repositories.IRepositories;
-using System.Security.Claims;
+using TaiLieuWebsiteBackend.Services.TaiLieuWebsiteBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy", builder =>
-    {
-        builder
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials()
-               .SetIsOriginAllowed(x => true);
-    });
-});
 
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -124,6 +112,8 @@ builder.Services.AddScoped<ILifeService, LifeService>();
 builder.Services.AddScoped<ILifeRepository, LifeRepository>();
 builder.Services.AddScoped<IComicRepository, ComicRepository>();
 builder.Services.AddScoped<IComicService, ComicService>();
+builder.Services.AddScoped<IStarRepository, StarRepository>();
+builder.Services.AddScoped<IStarService, StarService>();
 
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddAutoMapper(typeof(Program));
@@ -133,20 +123,29 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
-app.UseMiddleware<JwtMiddleware>();
+
 // Configure HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(options =>
+{
+    options.SetIsOriginAllowed(x=>true)
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
+
 app.UseHttpsRedirection();
-app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 
 app.Run();

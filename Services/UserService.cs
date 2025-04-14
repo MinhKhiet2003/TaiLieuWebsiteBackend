@@ -36,6 +36,7 @@ namespace TaiLieuWebsiteBackend.Services
 
         public async Task<ApiResponse<object>> AddUserAsync(User user)
         {
+            user.password_hash = _passwordHasher.HashPassword(user.password_hash);
             return await _userRepository.AddUserAsync(user);
         }
 
@@ -153,6 +154,7 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _userRepository.UsernameExistsAsync(username);
         }
+
     }
 }
 

@@ -19,7 +19,7 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public IEnumerable<Video> GetAllVideos()
         {
-            return _context.Videos.Include(d => d.Category).Include(d => d.User).ToList();
+            return _context.Videos.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
         }
 
         public Video? GetVideoById(int id)
@@ -62,6 +62,7 @@ namespace TaiLieuWebsiteBackend.Repositories
             var query = _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.User)
+                .OrderByDescending(v => v.UpdatedAt).ThenByDescending(v => v.CreatedAt)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(name))
@@ -83,7 +84,13 @@ namespace TaiLieuWebsiteBackend.Repositories
         }
         public async Task<IEnumerable<VideoDto>> GetVideosByCategoryIdAsync(int categoryId)
         {
-            return await Task.FromResult(_context.Videos.Where(v => v.category_id == categoryId).Select(v => new VideoDto
+            var videos = await _context.Videos
+                .Where(v => v.category_id == categoryId)
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .ToListAsync();
+
+            return videos.Select(v => new VideoDto
             {
                 video_id = v.video_id,
                 title = v.title,
@@ -93,7 +100,7 @@ namespace TaiLieuWebsiteBackend.Repositories
                 uploaded_by = v.uploaded_by,
                 created_at = v.CreatedAt,
                 updated_at = v.UpdatedAt
-            }).ToList());
+            });
         }
     }
 }

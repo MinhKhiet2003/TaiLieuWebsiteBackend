@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="site21979" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Minh\ Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\obj\\Release\\net8\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="TaiLieuWebsiteBackend.Data.AppDbContext" description="" value="Server=20.70.160.71,1433;Database=TaiLieuWebsite;User Id=hachieve;Password=123456789Abc@;TrustServerCertificate=True;" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\Minh\ Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\obj\\Release\\net8\.0\\PubTmp\\EFSQLScripts\\TaiLieuWebsiteBackend\.Data\.AppDbContext\.sql$" />
+  </parameter>
+</parameters>

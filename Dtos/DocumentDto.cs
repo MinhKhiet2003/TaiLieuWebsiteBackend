@@ -9,11 +9,12 @@
         public int UploadedBy { get; set; }
     }
 
-    // DTO để trả về dữ liệu cho client (GET)
     public class DocumentDto : CreateUpdateDocumentDto
     {
         public int Id { get; set; }
         public string UploadedByUsername { get; set; }
+        public int CommentCount { get; set; }
+        public double AverageRating { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; }
     }

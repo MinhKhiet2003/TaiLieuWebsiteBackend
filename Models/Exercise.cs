@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TaiLieuWebsiteBackend.Models.TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Models
 {
@@ -20,6 +21,7 @@ namespace TaiLieuWebsiteBackend.Models
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; } = false;
 
         // Khóa ngoại đến bảng Categories
         [ForeignKey("Category")]

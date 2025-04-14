@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using TaiLieuWebsiteBackend.Models.TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Models
 {
@@ -17,6 +18,7 @@ namespace TaiLieuWebsiteBackend.Models
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; } = false;
         [ForeignKey("User")]
         public int Uploaded_by { get; set; }
         [JsonIgnore]
@@ -27,5 +29,7 @@ namespace TaiLieuWebsiteBackend.Models
         public int Category_id { get; set; }
         [JsonIgnore]
         public Category Category { get; set; }
+        public ICollection<Star> Stars { get; set; }
+
     }
 }

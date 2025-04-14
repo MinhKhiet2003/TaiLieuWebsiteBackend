@@ -19,18 +19,23 @@ namespace TaiLieuWebsiteBackend.Models
 
         // Khóa ngoại đến bảng Documents
         [ForeignKey("Document")]
-        public int document_id { get; set; }
+        public int? document_id { get; set; }
         public Document Document { get; set; }
 
         // Khóa ngoại đến bảng Games
         [ForeignKey("Game")]
-        public int game_id { get; set; }
+        public int? game_id { get; set; }
         public Game Game { get; set; }
 
         // Khóa ngoại đến bảng Videos
         [ForeignKey("Video")]
-        public int video_id { get; set; }
+        public int? video_id { get; set; }
         public Video Video { get; set; }
+
+        // Khóa ngoại đến bảng Commic
+        [ForeignKey("Comic")]
+        public int? comic_id { get; set; }
+        public Comic Comic { get; set; }
 
 
         // Khóa ngoại đến bảng Users

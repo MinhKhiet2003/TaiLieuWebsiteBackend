@@ -56,6 +56,9 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return BadRequest(new { message = "Đã có video có tiêu đề tương tự trong danh mục này!" });
             }
 
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+
             var video = new Video
             {
                 title = videoDto.title,
@@ -63,8 +66,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                 video_url = videoDto.video_url,
                 category_id = videoDto.category_id,
                 uploaded_by = videoDto.uploaded_by,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                CreatedAt = currentTime,
+                UpdatedAt = currentTime
             };
 
             try
@@ -88,7 +91,8 @@ namespace TaiLieuWebsiteBackend.Controllers
             {
                 return BadRequest(new { message = "Đã có video có tiêu đề tương tự trong danh mục này!" });
             }
-
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
             var video = new Video
             {
                 video_id = id,
@@ -97,7 +101,7 @@ namespace TaiLieuWebsiteBackend.Controllers
                 video_url = videoDto.video_url,
                 category_id = videoDto.category_id,
                 uploaded_by = videoDto.uploaded_by,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = currentTime
             };
 
             try
@@ -145,7 +149,9 @@ namespace TaiLieuWebsiteBackend.Controllers
                                           uploaded_by = v.uploaded_by,
                                           UploadedByUsername = v.UploadedByUsername ?? "Không xác định",
                                           created_at = v.created_at,
-                                          updated_at = v.updated_at
+                                          updated_at = v.updated_at,
+                                          CommentCount = v.CommentCount,
+                                          AverageRating = v.AverageRating
                                       })
                                       .ToList();
 

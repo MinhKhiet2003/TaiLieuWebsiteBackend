@@ -19,7 +19,7 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public IEnumerable<Document> GetAllDocuments()
         {
-            return _context.Documents.Include(d => d.Category).Include(d => d.User).ToList();
+            return _context.Documents.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
         }
 
         public Document? GetDocumentById(int id)
@@ -83,7 +83,11 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public async Task<IEnumerable<Document>> SearchDocumentsAsync(string? name, int? categoryId, int? classId)
         {
-            var query = _context.Documents.AsQueryable();
+            var query = _context.Documents
+                        .Include(d => d.Category)
+                        .Include(d => d.User)
+                        .OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt)
+                        .AsQueryable();
 
             // Lọc theo tên (nếu có)
             if (!string.IsNullOrWhiteSpace(name))

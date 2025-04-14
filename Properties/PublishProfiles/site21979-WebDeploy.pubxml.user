@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAABi4lm6reKUuuOLRlJNAtJgAAAAACAAAAAAAQZgAAAAEAACAAAAD3f2q6t8ZGAIYf29aGEVMtyk3sJZteWXlvg/O67v3A6gAAAAAOgAAAAAIAACAAAABRKKzhFk1dgxkmPL+6u/4r/bYIDYtl0f39BQ0pziXVkyAAAAAjfY5bXxaYjUB6GG73Lfbplpv/YBeIrUUlCYUCVmD6BUAAAABmBUl2EwijPpxTL6akRc3pI2DfzDuTE3NLWm+rWoA+oUXdT5ixyDnMGaGpmFCIZwgfScalv7tZ3KfzN58ZNOvC</EncryptedPassword>
+    <History>True|2025-04-14T14:11:13.2463153Z||;True|2025-04-14T20:17:07.3167531+07:00||;True|2025-04-14T20:06:05.5399338+07:00||;True|2025-04-14T20:05:20.4129338+07:00||;True|2025-04-14T20:00:52.3725359+07:00||;True|2025-04-14T19:58:11.2623163+07:00||;True|2025-04-14T19:57:14.4082196+07:00||;True|2025-04-14T19:55:46.5561614+07:00||;True|2025-04-14T19:53:43.5861608+07:00||;True|2025-04-14T19:49:15.0875854+07:00||;True|2025-04-14T19:47:12.6062163+07:00||;True|2025-04-14T19:45:54.9144415+07:00||;True|2025-04-14T19:44:42.7088485+07:00||;True|2025-04-14T19:42:30.2694293+07:00||;True|2025-04-14T19:36:54.8583831+07:00||;True|2025-04-14T19:34:05.1705731+07:00||;True|2025-04-14T19:32:08.7646298+07:00||;True|2025-04-14T19:30:49.9435398+07:00||;True|2025-04-14T19:24:09.8558185+07:00||;True|2025-04-14T19:23:07.9452749+07:00||;True|2025-04-14T19:08:31.8460948+07:00||;True|2025-04-14T17:58:21.4987603+07:00||;True|2025-04-14T17:55:50.3288111+07:00||;True|2025-04-14T17:53:39.4462516+07:00||;True|2025-04-14T17:51:19.5557859+07:00||;True|2025-04-14T12:48:45.3965764+07:00||;True|2025-04-14T12:44:25.0908757+07:00||;True|2025-04-14T12:39:57.3226473+07:00||;True|2025-04-14T12:34:39.9336971+07:00||;True|2025-04-14T12:29:58.1164691+07:00||;True|2025-04-14T12:27:52.1910990+07:00||;True|2025-04-14T12:21:59.6666811+07:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=20.70.160.71,1433%3bDatabase=TaiLieuWebsite%3bUser Id=hachieve%3bPassword=123456789Abc%40%3bTrustServerCertificate=True%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="TaiLieuWebsiteBackend.Data.AppDbContext">
+      <Value>Server=20.70.160.71,1433%3bDatabase=TaiLieuWebsite%3bUser Id=hachieve%3bPassword=123456789Abc%40%3bTrustServerCertificate=True%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

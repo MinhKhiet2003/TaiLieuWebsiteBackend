@@ -15,7 +15,7 @@ public class GameRepository : IGameRepository
 
     public async Task<IEnumerable<Game>> GetAllGamesAsync()
     {
-        return _context.Games.Include(d => d.Category).Include(d => d.User).ToList();
+        return _context.Games.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
 
     }
 
@@ -47,11 +47,12 @@ public class GameRepository : IGameRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task<IEnumerable<Game>> SearchGamesAsync(string? name, int? categoryId, int? classId)
+    public async Task<IEnumerable<Game>> SearchGamesAsync(string? name, int? categoryId, int? classId, string? classify)
     {
         var query = _context.Games
             .Include(g => g.Category)
             .Include(g => g.User)
+            .OrderByDescending(g => g.UpdatedAt).ThenByDescending(g => g.CreatedAt)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(name))
@@ -68,7 +69,10 @@ public class GameRepository : IGameRepository
         {
             query = query.Where(g => g.Category.class_id == classId);
         }
-
+        if (!string.IsNullOrWhiteSpace(classify))
+        {
+            query = query.Where(g => g.classify == classify);
+        }
         return await query.ToListAsync();
     }
     public async Task<IEnumerable<Game>> GetGamesByCategoryIdAsync(int categoryId)

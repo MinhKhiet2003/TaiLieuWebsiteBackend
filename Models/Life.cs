@@ -13,6 +13,7 @@ namespace TaiLieuWebsiteBackend.Models
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; } = false;
         [ForeignKey("User")]
         public int Uploaded_by { get; set; }
         [JsonIgnore]

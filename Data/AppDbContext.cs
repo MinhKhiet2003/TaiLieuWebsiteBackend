@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaiLieuWebsiteBackend.Models;
+using TaiLieuWebsiteBackend.Models.TaiLieuWebsiteBackend.Models;
 
 namespace TaiLieuWebsiteBackend.Data
 {
@@ -19,14 +20,87 @@ namespace TaiLieuWebsiteBackend.Data
         public DbSet<Life> Lifes { get; set; }
         public DbSet<Comic> Comics { get; set; }
 
-
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Thiết lập các mối quan hệ và ràng buộc
+            // Thiết lập khóa chính và IDENTITY cho Star
+            modelBuilder.Entity<Star>()
+                .HasKey(s => s.star_id);
+
+            modelBuilder.Entity<Star>()
+                .Property(s => s.star_id)
+                .ValueGeneratedOnAdd();
+
+            // Mối quan hệ với User
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Stars)
+                .HasForeignKey(s => s.user_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Mối quan hệ với Document
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.Document)
+                .WithMany(d => d.Stars)
+                .HasForeignKey(s => s.document_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Mối quan hệ với Exercise
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.Exercise)
+                .WithMany(e => e.Stars)
+                .HasForeignKey(s => s.exercise_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Mối quan hệ với Game
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.Game)
+                .WithMany(g => g.Stars)
+                .HasForeignKey(s => s.game_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Mối quan hệ với Video
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.Video)
+                .WithMany(v => v.Stars)
+                .HasForeignKey(s => s.video_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Mối quan hệ với Comic
+            modelBuilder.Entity<Star>()
+                .HasOne(s => s.Comic)
+                .WithMany(c => c.Stars)
+                .HasForeignKey(s => s.comic_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Ràng buộc unique để ngăn đánh giá trùng lặp
+            modelBuilder.Entity<Star>()
+                .HasIndex(s => new { s.user_id, s.document_id })
+                .IsUnique()
+                .HasFilter("[document_id] IS NOT NULL");
+
+            modelBuilder.Entity<Star>()
+                .HasIndex(s => new { s.user_id, s.exercise_id })
+                .IsUnique()
+                .HasFilter("[exercise_id] IS NOT NULL");
+
+            modelBuilder.Entity<Star>()
+                .HasIndex(s => new { s.user_id, s.game_id })
+                .IsUnique()
+                .HasFilter("[game_id] IS NOT NULL");
+
+            modelBuilder.Entity<Star>()
+                .HasIndex(s => new { s.user_id, s.video_id })
+                .IsUnique()
+                .HasFilter("[video_id] IS NOT NULL");
+
+            modelBuilder.Entity<Star>()
+                .HasIndex(s => new { s.user_id, s.comic_id })
+                .IsUnique()
+                .HasFilter("[comic_id] IS NOT NULL");
+
+            // Các cấu hình khác (giữ nguyên)
             modelBuilder.Entity<Category>()
                 .HasOne(v => v.Class)
                 .WithMany(c => c.Categories)
@@ -50,6 +124,7 @@ namespace TaiLieuWebsiteBackend.Data
                 .WithMany(c => c.Comics)
                 .HasForeignKey(c => c.Category_id)
                 .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Life>()
                 .HasOne(l => l.User)
                 .WithMany()
@@ -93,52 +168,22 @@ namespace TaiLieuWebsiteBackend.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Comment>()
-               .HasOne(c => c.Document)
-               .WithMany(v => v.Comments)
-               .HasForeignKey(c => c.document_id)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Comment>()
-               .HasOne(c => c.Game)
-               .WithMany(v => v.Comments)
-               .HasForeignKey(c => c.game_id)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Comment>()
-               .HasOne(c => c.Video)
-               .WithMany(v => v.Comments)
-               .HasForeignKey(c => c.video_id)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Star>()
-                .HasOne(c => c.User)
-               .WithMany()
-                .HasForeignKey(c => c.star_id)
+                .HasOne(c => c.Document)
+                .WithMany(v => v.Comments)
+                .HasForeignKey(c => c.document_id)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Star>()
-               .HasOne(c => c.Document)
-               .WithMany(v => v.Stars)
-               .HasForeignKey(c => c.star_id)
-               .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Game)
+                .WithMany(v => v.Comments)
+                .HasForeignKey(c => c.game_id)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Star>()
-               .HasOne(c => c.Exercise)
-               .WithMany(v => v.Stars)
-               .HasForeignKey(c => c.star_id)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Star>()
-               .HasOne(c => c.Game)
-               .WithMany(v => v.Stars)
-               .HasForeignKey(c => c.star_id)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Star>()
-               .HasOne(c => c.Video)
-               .WithMany(v => v.Stars)
-               .HasForeignKey(c => c.star_id)
-               .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Video)
+                .WithMany(v => v.Comments)
+                .HasForeignKey(c => c.video_id)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

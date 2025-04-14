@@ -7,13 +7,13 @@ namespace TaiLieuWebsiteBackend.Services.IServices
 {
     public interface IComicService
     {
-        IEnumerable<ComicDto> GetAllComics();
-        ComicDto GetComicById(int id);
-        void AddComic(Comic comic);
-        void UpdateComic(Comic comic);
-        void DeleteComic(int id);
+        Task<IEnumerable<ComicDto>> GetAllComicsAsync();
+        Task<ComicDto> GetComicByIdAsync(int id);
+        Task AddComicAsync(Comic comic);
+        Task UpdateComicAsync(Comic comic);
+        Task DeleteComicAsync(int id);
         Task<IEnumerable<ComicDto>> SearchComicsAsync(string? title, int? categoryId, int? classId);
         Task<IEnumerable<int>> GetUsedCategoryIdsAsync();
-        IEnumerable<ComicDto> GetComicsByCategoryId(int categoryId);
+        Task<IEnumerable<ComicDto>> GetComicsByCategoryIdAsync(int categoryId);
     }
 }

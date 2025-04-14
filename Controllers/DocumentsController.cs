@@ -44,6 +44,8 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpPost]
         public ActionResult AddDocument([FromBody] CreateUpdateDocumentDto documentDto)
         {
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
             var document = new Document
             {
                 title = documentDto.Title,
@@ -51,8 +53,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                 file_path = documentDto.file_path,
                 category_id = documentDto.CategoryId,
                 uploaded_by = documentDto.UploadedBy,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                CreatedAt = currentTime,
+                UpdatedAt = currentTime
             };
 
             try
@@ -69,6 +71,8 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateDocument(int id, [FromBody] CreateUpdateDocumentDto documentDto)
         {
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
             var document = new Document
             {
                 document_id = id,
@@ -77,7 +81,7 @@ namespace TaiLieuWebsiteBackend.Controllers
                 file_path = documentDto.file_path,
                 category_id = documentDto.CategoryId,
                 uploaded_by = documentDto.UploadedBy,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = currentTime
             };
 
             try
@@ -124,7 +128,9 @@ namespace TaiLieuWebsiteBackend.Controllers
                                                 UploadedBy = d.UploadedBy ,
                                                 UploadedByUsername = d.UploadedByUsername ?? "Không xác định",
                                                 CreatedAt = d.CreatedAt,
-                                                UpdatedAt = d.UpdatedAt
+                                                UpdatedAt = d.UpdatedAt,
+                                                CommentCount = d.CommentCount,
+                                                AverageRating = d.AverageRating
                                             })
                                             .ToList();
 

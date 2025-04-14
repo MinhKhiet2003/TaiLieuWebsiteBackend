@@ -6,12 +6,12 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
 {
     public interface IComicRepository
     {
-        IEnumerable<Comic> GetAllComics();
-        Comic? GetComicById(int id);
-        void AddComic(Comic comic);
-        void UpdateComic(Comic comic);
-        void DeleteComic(int id);
+        Task<IEnumerable<Comic>> GetAllComicsAsync();
+        Task<Comic?> GetComicByIdAsync(int id);
+        Task AddComicAsync(Comic comic);
+        Task UpdateComicAsync(Comic comic);
+        Task DeleteComicAsync(int id);
         Task<IEnumerable<Comic>> SearchComicsAsync(string? title, int? categoryId, int? classId);
-        IEnumerable<Comic> GetComicsByCategoryId(int categoryId);
+        Task<IEnumerable<Comic>> GetComicsByCategoryIdAsync(int categoryId);
     }
 }

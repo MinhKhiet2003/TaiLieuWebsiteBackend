@@ -13,6 +13,8 @@
         public int video_id { get; set; }
         
         public  string UploadedByUsername { get; set; }
+        public int CommentCount { get; set; }
+        public double AverageRating { get; set; }
         public string category_name { get; set; }
         public DateTime created_at { get; set; } = DateTime.Now;
         public DateTime updated_at { get; set; } = DateTime.Now;
