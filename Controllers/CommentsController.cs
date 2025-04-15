@@ -27,7 +27,9 @@ namespace TaiLieuWebsiteBackend.Controllers
                     dto.DocumentId,
                     dto.GameId,
                     dto.VideoId,
-                    dto.ComicId
+                    dto.ComicId,
+                    dto.QuestionSet,
+                    dto.CategoryId
                 );
                 return Ok(comment);
             }
@@ -66,13 +68,18 @@ namespace TaiLieuWebsiteBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetComments([FromQuery] int? documentId = null,
-            [FromQuery] int? gameId = null, [FromQuery] int? videoId = null,
-            [FromQuery] int? comicId = null)
+        public async Task<IActionResult> GetComments(
+            [FromQuery] int? documentId = null,
+            [FromQuery] int? gameId = null,
+            [FromQuery] int? videoId = null,
+            [FromQuery] int? comicId = null,
+            [FromQuery] int? questionSet = null,
+            [FromQuery] int? categoryId = null)
         {
             try
             {
-                var comments = await _commentService.GetCommentsByIdAsync(documentId, gameId, videoId, comicId);
+                var comments = await _commentService.GetCommentsByIdAsync(
+                    documentId, gameId, videoId, comicId, questionSet, categoryId);
                 return Ok(comments);
             }
             catch (Exception ex)
@@ -82,13 +89,50 @@ namespace TaiLieuWebsiteBackend.Controllers
         }
 
         [HttpGet("count")]
-        public async Task<IActionResult> CountComments([FromQuery] int? documentId = null,
-            [FromQuery] int? gameId = null, [FromQuery] int? videoId = null,
-            [FromQuery] int? comicId = null)
+        public async Task<IActionResult> CountComments(
+            [FromQuery] int? documentId = null,
+            [FromQuery] int? gameId = null,
+            [FromQuery] int? videoId = null,
+            [FromQuery] int? comicId = null,
+            [FromQuery] int? questionSet = null,
+            [FromQuery] int? categoryId = null)
         {
             try
             {
-                var count = await _commentService.CountCommentsAsync(documentId, gameId, videoId, comicId);
+                var count = await _commentService.CountCommentsAsync(
+                    documentId, gameId, videoId, comicId, questionSet, categoryId);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("by-questionset")]
+        public async Task<IActionResult> GetCommentsByQuestionSet(
+            [FromQuery] int questionSet,
+            [FromQuery] int categoryId)
+        {
+            try
+            {
+                var comments = await _commentService.GetCommentsByQuestionSetAsync(questionSet, categoryId);
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("count-by-questionset")]
+        public async Task<IActionResult> CountCommentsByQuestionSet(
+            [FromQuery] int questionSet,
+            [FromQuery] int categoryId)
+        {
+            try
+            {
+                var count = await _commentService.CountCommentsByQuestionSetAsync(questionSet, categoryId);
                 return Ok(count);
             }
             catch (Exception ex)

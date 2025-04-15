@@ -603,6 +603,31 @@ BEGIN
     VALUES (N'20250415161813_questionSet', N'9.0.3');
 END;
 
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250415173258_AddQuestionSetAndCategoryToComment'
+)
+BEGIN
+    ALTER TABLE [Comments] ADD [category_id] int NULL;
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250415173258_AddQuestionSetAndCategoryToComment'
+)
+BEGIN
+    ALTER TABLE [Comments] ADD [question_set] int NULL;
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250415173258_AddQuestionSetAndCategoryToComment'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250415173258_AddQuestionSetAndCategoryToComment', N'9.0.3');
+END;
+
 COMMIT;
 GO
 

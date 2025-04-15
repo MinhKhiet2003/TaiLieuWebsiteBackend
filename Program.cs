@@ -11,7 +11,6 @@ using TaiLieuWebsiteBackend.Repositories;
 using TaiLieuWebsiteBackend.Repositories.IRepositories;
 using TaiLieuWebsiteBackend.Services;
 using TaiLieuWebsiteBackend.Services.IServices;
-using TaiLieuWebsiteBackend.Services.TaiLieuWebsiteBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

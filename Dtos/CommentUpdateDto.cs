@@ -6,6 +6,8 @@
         public int? GameId { get; set; }
         public int? VideoId { get; set; }
         public int? ComicId { get; set; }
+        public int? QuestionSet { get; set; }
+        public int? CategoryId { get; set; }
     }
 
     public class CommentUpdateDto

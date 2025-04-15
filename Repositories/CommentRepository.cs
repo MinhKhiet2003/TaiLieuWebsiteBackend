@@ -50,62 +50,43 @@ namespace TaiLieuWebsiteBackend.Repositories
             return await _context.Comments
                 .Where(c => c.document_id == documentId)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
         }
-        public Dictionary<int, int> GetCommentCountsByDocumentIds(IEnumerable<int> documentIds)
-        {
-            return _context.Comments
-                .Where(c => c.document_id != null && documentIds.Contains(c.document_id.Value))
-                .GroupBy(c => c.document_id)
-                .ToDictionary(g => g.Key.Value, g => g.Count());
-        }
+
         public async Task<List<Comment>> GetByGameIdAsync(int gameId)
         {
             return await _context.Comments
                 .Where(c => c.game_id == gameId)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
         }
 
-        public Dictionary<int, int> GetCommentCountsByGameIds(List<int> gameIds)
-        {
-            return _context.Comments
-                .Where(c => gameIds.Contains(c.game_id.Value))
-                .GroupBy(c => c.game_id.Value)
-                .ToDictionary(g => g.Key, g => g.Count());
-        }
-        public async Task<int> CountByVideoIdAsync(int videoId)
-        {
-            return await _context.Comments
-                .CountAsync(c => c.video_id == videoId);
-        }
-
-        public Dictionary<int, int> GetCommentCountsByVideoIds(List<int> videoIds)
-        {
-            return _context.Comments
-                .Where(c => videoIds.Contains(c.video_id.Value))
-                .GroupBy(c => c.video_id.Value)
-                .ToDictionary(g => g.Key, g => g.Count());
-        }
         public async Task<List<Comment>> GetByVideoIdAsync(int videoId)
         {
             return await _context.Comments
                 .Where(c => c.video_id == videoId)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
         }
-        public Dictionary<int, int> GetCommentCountsByComicIds(List<int> comicIds)
-        {
-            return _context.Comments
-                .Where(c => c.comic_id.HasValue && comicIds.Contains(c.comic_id.Value))
-                .GroupBy(c => c.comic_id.Value)
-                .ToDictionary(g => g.Key, g => g.Count());
-        }
+
         public async Task<List<Comment>> GetByComicIdAsync(int comicId)
         {
             return await _context.Comments
                 .Where(c => c.comic_id == comicId)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.CreatedAt)
+                .ToListAsync();
+        }
+
+        public async Task<List<Comment>> GetByQuestionSetAndCategoryAsync(int questionSet, int categoryId)
+        {
+            return await _context.Comments
+                .Where(c => c.question_set == questionSet && c.category_id == categoryId)
+                .Include(c => c.User)
+                .OrderByDescending(c => c.CreatedAt)
                 .ToListAsync();
         }
 
@@ -118,9 +99,54 @@ namespace TaiLieuWebsiteBackend.Repositories
         {
             return await _context.Comments.CountAsync(c => c.game_id == gameId);
         }
+
+        public async Task<int> CountByVideoIdAsync(int videoId)
+        {
+            return await _context.Comments.CountAsync(c => c.video_id == videoId);
+        }
+
         public async Task<int> CountByComicIdAsync(int comicId)
         {
             return await _context.Comments.CountAsync(c => c.comic_id == comicId);
+        }
+
+        public async Task<int> CountByQuestionSetAndCategoryAsync(int questionSet, int categoryId)
+        {
+            return await _context.Comments
+                .CountAsync(c => c.question_set == questionSet && c.category_id == categoryId);
+        }
+
+        // Các phương thức dictionary giữ nguyên
+        public Dictionary<int, int> GetCommentCountsByDocumentIds(IEnumerable<int> documentIds)
+        {
+            return _context.Comments
+                .Where(c => c.document_id != null && documentIds.Contains(c.document_id.Value))
+                .GroupBy(c => c.document_id)
+                .ToDictionary(g => g.Key.Value, g => g.Count());
+        }
+
+        public Dictionary<int, int> GetCommentCountsByGameIds(List<int> gameIds)
+        {
+            return _context.Comments
+                .Where(c => gameIds.Contains(c.game_id.Value))
+                .GroupBy(c => c.game_id.Value)
+                .ToDictionary(g => g.Key, g => g.Count());
+        }
+
+        public Dictionary<int, int> GetCommentCountsByVideoIds(List<int> videoIds)
+        {
+            return _context.Comments
+                .Where(c => videoIds.Contains(c.video_id.Value))
+                .GroupBy(c => c.video_id.Value)
+                .ToDictionary(g => g.Key, g => g.Count());
+        }
+
+        public Dictionary<int, int> GetCommentCountsByComicIds(List<int> comicIds)
+        {
+            return _context.Comments
+                .Where(c => c.comic_id.HasValue && comicIds.Contains(c.comic_id.Value))
+                .GroupBy(c => c.comic_id.Value)
+                .ToDictionary(g => g.Key, g => g.Count());
         }
     }
 }

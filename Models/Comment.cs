@@ -10,6 +10,8 @@ namespace TaiLieuWebsiteBackend.Models
 
         [Required]
         public string content { get; set; }
+        public int? question_set { get; set; }
+        public int? category_id { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

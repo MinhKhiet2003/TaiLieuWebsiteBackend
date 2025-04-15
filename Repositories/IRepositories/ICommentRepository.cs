@@ -1,4 +1,5 @@
 ﻿using TaiLieuWebsiteBackend.Models;
+using System.Collections.Generic;
 
 namespace TaiLieuWebsiteBackend.Repositories.IRepositories
 {
@@ -8,17 +9,19 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         Task<Comment> UpdateAsync(Comment comment);
         Task DeleteAsync(int commentId);
         Task<Comment> GetByIdAsync(int commentId);
-        Dictionary<int, int> GetCommentCountsByDocumentIds(IEnumerable<int> documentIds);
         Task<List<Comment>> GetByDocumentIdAsync(int documentId);
-        Dictionary<int, int> GetCommentCountsByGameIds(List<int> gameIds);
         Task<List<Comment>> GetByGameIdAsync(int gameId);
-        Dictionary<int, int> GetCommentCountsByVideoIds(List<int> videoIds);
         Task<List<Comment>> GetByVideoIdAsync(int videoId);
-        Dictionary<int, int> GetCommentCountsByComicIds(List<int> comicIds);
         Task<List<Comment>> GetByComicIdAsync(int comicId);
+        Task<List<Comment>> GetByQuestionSetAndCategoryAsync(int questionSet, int categoryId);
         Task<int> CountByDocumentIdAsync(int documentId);
         Task<int> CountByGameIdAsync(int gameId);
         Task<int> CountByVideoIdAsync(int videoId);
         Task<int> CountByComicIdAsync(int comicId);
+        Task<int> CountByQuestionSetAndCategoryAsync(int questionSet, int categoryId);
+        Dictionary<int, int> GetCommentCountsByDocumentIds(IEnumerable<int> documentIds);
+        Dictionary<int, int> GetCommentCountsByGameIds(List<int> gameIds);
+        Dictionary<int, int> GetCommentCountsByVideoIds(List<int> videoIds);
+        Dictionary<int, int> GetCommentCountsByComicIds(List<int> comicIds);
     }
 }
