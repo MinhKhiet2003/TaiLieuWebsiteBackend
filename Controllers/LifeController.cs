@@ -58,7 +58,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                 Category_id = lifeDto.Category_id,
                 Uploaded_by = lifeDto.Uploaded_by,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                QuestionSet = lifeDto.QuestionSet
             };
 
             try
@@ -90,7 +91,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                 Answer = lifeDto.Answer,
                 Category_id = lifeDto.Category_id,
                 Uploaded_by = lifeDto.Uploaded_by,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                QuestionSet = lifeDto.QuestionSet
             };
 
             try
@@ -115,17 +117,31 @@ namespace TaiLieuWebsiteBackend.Controllers
         public async Task<IActionResult> SearchLives(
     [FromQuery] string? question,
     [FromQuery] int? categoryId,
-    [FromQuery] int? classId)
+    [FromQuery] int? classId,
+    [FromQuery] int? questionSet) // Thêm param mới
         {
             try
             {
-                var lives = await _lifeService.SearchLivesAsync(question, categoryId, classId);
+                var lives = await _lifeService.SearchLivesAsync(question, categoryId, classId, questionSet);
                 return Ok(lives);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
+        }
+        [HttpGet("questionset/{questionSet}")]
+        public ActionResult<IEnumerable<LifeDto>> GetLifesByQuestionSet(int questionSet)
+        {
+            var lives = _lifeService.GetLifesByQuestionSet(questionSet);
+            return Ok(lives);
+        }
+
+        [HttpGet("questionsets")]
+        public ActionResult<IEnumerable<int>> GetUniqueQuestionSets()
+        {
+            var questionSets = _lifeService.GetUniqueQuestionSets();
+            return Ok(questionSets);
         }
     }
 }

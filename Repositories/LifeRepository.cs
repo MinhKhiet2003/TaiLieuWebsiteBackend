@@ -48,7 +48,8 @@ namespace TaiLieuWebsiteBackend.Repositories
             existingLife.Answer = life.Answer;
             existingLife.Category_id = life.Category_id;
             existingLife.Uploaded_by = life.Uploaded_by;
-            existingLife.UpdatedAt = DateTime.Now; 
+            existingLife.UpdatedAt = DateTime.Now;
+            existingLife.QuestionSet = life.QuestionSet;
 
             _context.SaveChanges();
         }
@@ -63,7 +64,7 @@ namespace TaiLieuWebsiteBackend.Repositories
             }
         }
 
-        public async Task<IEnumerable<Life>> SearchLifesAsync(string? question, int? categoryId, int? classId)
+        public async Task<IEnumerable<Life>> SearchLifesAsync(string? question, int? categoryId, int? classId, int? questionSet)
         {
             var query = _context.Lifes
                 .Include(l => l.Category)
@@ -86,6 +87,23 @@ namespace TaiLieuWebsiteBackend.Repositories
             }
 
             return await query.ToListAsync();
+        }
+        public IEnumerable<Life> GetLifesByQuestionSet(int questionSet)
+        {
+            return _context.Lifes
+                .Include(l => l.Category)
+                .Include(l => l.User)
+                .Where(l => l.QuestionSet == questionSet)
+                .ToList();
+        }
+
+        public IEnumerable<int> GetUniqueQuestionSets()
+        {
+            return _context.Lifes
+                .Select(l => l.QuestionSet)
+                .Distinct()
+                .OrderBy(qs => qs)
+                .ToList();
         }
     }
 }

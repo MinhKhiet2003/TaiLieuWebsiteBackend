@@ -11,6 +11,8 @@ namespace TaiLieuWebsiteBackend.Repositories.IRepositories
         void AddLife(Life life);
         void UpdateLife(Life life);
         void DeleteLife(int id);
-        Task<IEnumerable<Life>> SearchLifesAsync(string? question, int? categoryId, int? classId);
+        Task<IEnumerable<Life>> SearchLifesAsync(string? question, int? categoryId, int? classId, int? questionSet);
+        IEnumerable<Life> GetLifesByQuestionSet(int questionSet);
+        IEnumerable<int> GetUniqueQuestionSets();
     }
 }

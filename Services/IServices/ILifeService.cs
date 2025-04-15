@@ -12,6 +12,8 @@ namespace TaiLieuWebsiteBackend.Services.IServices
         void AddLife(Life life);
         void UpdateLife(Life life);
         void DeleteLife(int id);
-        Task<IEnumerable<LifeDto>> SearchLivesAsync(string? question, int? categoryId, int? classId);
+        Task<IEnumerable<LifeDto>> SearchLivesAsync(string? question, int? categoryId, int? classId, int? questionSet);
+        IEnumerable<LifeDto> GetLifesByQuestionSet(int questionSet);
+        IEnumerable<int> GetUniqueQuestionSets();
     }
 }

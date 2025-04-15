@@ -6,6 +6,8 @@
         public string Answer { get; set; }
         public int Uploaded_by { get; set; }
         public int Category_id { get; set; }
+
+        public int QuestionSet { get; set; }
     }
     public class LifeDto : CreateUpdateLifeDto
     {

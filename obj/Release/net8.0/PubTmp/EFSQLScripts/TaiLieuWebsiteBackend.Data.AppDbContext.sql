@@ -586,6 +586,23 @@ BEGIN
     VALUES (N'20250414044351_AddIsDeletedToLife', N'9.0.3');
 END;
 
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250415161813_questionSet'
+)
+BEGIN
+    ALTER TABLE [Lifes] ADD [QuestionSet] int NOT NULL DEFAULT 0;
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250415161813_questionSet'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250415161813_questionSet', N'9.0.3');
+END;
+
 COMMIT;
 GO
 
