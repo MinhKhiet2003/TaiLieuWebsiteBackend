@@ -118,8 +118,15 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteVideo(int id)
         {
-            _videoService.DeleteVideo(id);
-            return NoContent();
+            try
+            {
+                _videoService.DeleteVideo(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("search")]

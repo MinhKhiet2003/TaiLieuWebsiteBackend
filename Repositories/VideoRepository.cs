@@ -19,12 +19,12 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public IEnumerable<Video> GetAllVideos()
         {
-            return _context.Videos.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
+            return _context.Videos.Where(v => !v.IsDeleted).Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
         }
 
         public Video? GetVideoById(int id)
         {
-            return _context.Videos
+            return _context.Videos.Where(v => !v.IsDeleted)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .FirstOrDefault(v => v.video_id == id);
@@ -49,17 +49,22 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public void DeleteVideo(int id)
         {
-            var video = _context.Videos.Find(id);
-            if (video != null)
+            var video = _context.Videos.FirstOrDefault(d => d.video_id == id);
+            if (video == null)
             {
-                _context.Videos.Remove(video);
-                _context.SaveChanges();
+                throw new Exception("Video không tồn tại!");
             }
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+            video.IsDeleted = true;
+            video.UpdatedAt = currentTime;
+            _context.Videos.Update(video);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Video>> SearchVideosAsync(string? name, int? categoryId, int? classId)
         {
-            var query = _context.Videos
+            var query = _context.Videos.Where(v => !v.IsDeleted)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .OrderByDescending(v => v.UpdatedAt).ThenByDescending(v => v.CreatedAt)
@@ -84,7 +89,7 @@ namespace TaiLieuWebsiteBackend.Repositories
         }
         public async Task<IEnumerable<VideoDto>> GetVideosByCategoryIdAsync(int categoryId)
         {
-            var videos = await _context.Videos
+            var videos = await _context.Videos.Where(v => !v.IsDeleted)
                 .Where(v => v.category_id == categoryId)
                 .Include(v => v.Category)
                 .Include(v => v.User)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection.Metadata;
 using TaiLieuWebsiteBackend.Data;
 using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Repositories.IRepositories;
@@ -15,13 +16,13 @@ public class GameRepository : IGameRepository
 
     public async Task<IEnumerable<Game>> GetAllGamesAsync()
     {
-        return _context.Games.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
+        return _context.Games.Where(d => !d.IsDeleted).Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
 
     }
 
     public async Task<Game> GetGameByIdAsync(int id)
     {
-        return _context.Games.Include(v => v.Category)
+        return _context.Games.Where(g => !g.IsDeleted).Include(v => v.Category)
                 .Include(v => v.User)
                 .FirstOrDefault(v => v.game_id == id);
     }
@@ -40,16 +41,21 @@ public class GameRepository : IGameRepository
 
     public async Task DeleteGameAsync(int id)
     {
-        var game = await _context.Games.FindAsync(id);
-        if (game != null)
+        var game = _context.Games.FirstOrDefault(d => d.game_id == id);
+        if (game == null)
         {
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
+            throw new Exception("Game không tồn tại!");
         }
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+            game.IsDeleted = true;
+            game.UpdatedAt = currentTime;
+            _context.Games.Update(game);
+            _context.SaveChanges();
     }
     public async Task<IEnumerable<Game>> SearchGamesAsync(string? name, int? categoryId, int? classId, string? classify)
     {
-        var query = _context.Games
+        var query = _context.Games.Where(g => !g.IsDeleted)
             .Include(g => g.Category)
             .Include(g => g.User)
             .OrderByDescending(g => g.UpdatedAt).ThenByDescending(g => g.CreatedAt)
@@ -77,7 +83,7 @@ public class GameRepository : IGameRepository
     }
     public async Task<IEnumerable<Game>> GetGamesByCategoryIdAsync(int categoryId)
     {
-        return await _context.Games
+        return await _context.Games.Where(g => !g.IsDeleted)
             .Where(g => g.category_id == categoryId)
             .ToListAsync();
     }

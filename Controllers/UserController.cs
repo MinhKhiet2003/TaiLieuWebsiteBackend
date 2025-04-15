@@ -52,7 +52,12 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             if (await _userService.UsernameExistsAsync(user.username))
             {
-                return BadRequest("Username đã tồn tại");
+                return BadRequest(new { success = false, error = "Username đã tồn tại" });
+            }
+
+            if (await _userService.EmailExistsAsync(user.email))
+            {
+                return BadRequest(new { success = false, error = "Email đã tồn tại" });
             }
 
             var response = await _userService.AddUserAsync(user);
@@ -75,14 +80,6 @@ namespace TaiLieuWebsiteBackend.Controllers
             var userExistsResponse = await _userService.UserExistsAsync(id);
             if (!userExistsResponse.Data)
                 return NotFound(new { success = false, error = "Người dùng không tồn tại" });
-
-            // Kiểm tra username trùng với user khác
-            var existingUserResponse = await _userService.GetUserByIdAsync(id);
-            if (existingUserResponse.Data.username != user.username
-                && await _userService.UsernameExistsAsync(user.username))
-            {
-                return BadRequest(new { success = false, error = "Username đã tồn tại" });
-            }
 
             var response = await _userService.UpdateUserAsync(user);
             if (response.StatusCode != 200)
@@ -281,6 +278,14 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(users);
         }
 
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreUser(int id)
+        {
+            var response = await _userService.RestoreUserAsync(id);
+            if (response.StatusCode != 200)
+                return StatusCode(response.StatusCode, new { success = false, error = response.ErrorMessage });
 
+            return Ok(new { success = true, message = "Khôi phục thành công" });
+        }
     }
 }

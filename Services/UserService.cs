@@ -57,12 +57,17 @@ namespace TaiLieuWebsiteBackend.Services
 
         public async Task<ApiResponse<User>> RegisterUserAsync(UserRegisterDto userRegisterDto)
         {
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
             var user = new User
             {
                 username = userRegisterDto.Username,
-                password_hash = _passwordHasher.HashPassword(userRegisterDto.Password),
+                password_hash = userRegisterDto.Password, // Sẽ được hash trong AddUserAsync
                 email = userRegisterDto.Email,
-                role = userRegisterDto.Role
+                role = userRegisterDto.Role ?? "user",
+                CreatedAt = currentTime,
+                UpdatedAt = currentTime,
+                IsDeleted = false
             };
 
             var response = await _userRepository.AddUserAsync(user);
@@ -133,6 +138,7 @@ namespace TaiLieuWebsiteBackend.Services
 
             return ApiResponse<ProfileDto>.Success(200, "Profile retrieved successfully", profile);
         }
+
         public async Task<bool> EmailExistsAsync(string email)
         {
             return await _userRepository.EmailExistsAsync(email);
@@ -142,19 +148,25 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _userRepository.ChangePasswordAsync(userId, oldPassword, newPassword);
         }
+
         public async Task<ApiResponse<int>> GetUserCountAsync()
         {
             return await _userRepository.GetUserCountAsync();
         }
+
         public async Task<IEnumerable<User>> SearchUsersAsync(string keyword)
         {
             return await _userRepository.SearchUsersAsync(keyword);
         }
+
         public async Task<bool> UsernameExistsAsync(string username)
         {
             return await _userRepository.UsernameExistsAsync(username);
         }
 
+        public async Task<ApiResponse<object>> RestoreUserAsync(int id)
+        {
+            return await _userRepository.RestoreUserAsync(id);
+        }
     }
 }
-

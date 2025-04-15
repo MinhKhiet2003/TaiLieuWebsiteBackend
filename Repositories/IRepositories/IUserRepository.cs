@@ -16,5 +16,6 @@ public interface IUserRepository
     User GetUserByUsername(string username);
     Task<IEnumerable<User>> SearchUsersAsync(string keyword);
     Task<bool> UsernameExistsAsync(string username);
+    Task<ApiResponse<object>> RestoreUserAsync(int id);
 
 }

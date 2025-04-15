@@ -117,8 +117,15 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteGame(int id)
         {
-            _gameService.DeleteGameAsync(id);
-            return NoContent();
+            try
+            {
+                _gameService.DeleteGameAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("search")]

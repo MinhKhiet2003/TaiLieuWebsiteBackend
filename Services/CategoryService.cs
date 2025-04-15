@@ -31,7 +31,8 @@ namespace TaiLieuWebsiteBackend.Services
                 UploadedBy = c.uploaded_by,
                 UploadedByUsername = c.User?.username,
                 CreatedAt = c.CreatedAt,
-                UpdatedAt = c.UpdatedAt
+                UpdatedAt = c.UpdatedAt,
+                IsDeleted = c.IsDeleted
 
             }).ToList();
         }
@@ -52,7 +53,8 @@ namespace TaiLieuWebsiteBackend.Services
                 UploadedBy = category.uploaded_by,
                 UploadedByUsername = category.User?.username,
                 CreatedAt = category.CreatedAt,
-                UpdatedAt = category.UpdatedAt
+                UpdatedAt = category.UpdatedAt,
+                IsDeleted = category.IsDeleted
             };
         }
 
@@ -85,23 +87,6 @@ namespace TaiLieuWebsiteBackend.Services
         {
              await _categoryRepository.DeleteCategoryAsync(id);
         }
-
-        public async Task<CategoryDto> GetCategoryByNameAsync(string name)
-        {
-            var category = await _categoryRepository.GetCategoryByName(name);
-            if (category == null)
-            {
-                return null;
-            }
-
-            return new CategoryDto
-            {
-                Id = category.category_id,
-                Name = category.name,
-                Description = category.description,
-                ClassId = category.class_id
-            };
-        }
         public async Task<IEnumerable<CategoryDto>> GetCategoriesByClassIdAsync(int classId)
         {
             var categories = await _categoryRepository.GetCategoriesByClassIdAsync(classId);
@@ -112,9 +97,26 @@ namespace TaiLieuWebsiteBackend.Services
                 Description = c.description,
                 ClassId = c.class_id,
                 UploadedBy = c.uploaded_by,
-                UploadedByUsername = c.User?.username, 
+                UploadedByUsername = c.User?.username,
                 CreatedAt = c.CreatedAt,
-                UpdatedAt = c.UpdatedAt
+                UpdatedAt = c.UpdatedAt,
+                IsDeleted = c.IsDeleted
+            }).ToList();
+        }
+        public async Task<IEnumerable<CategoryDto>> GetCategoriesByClassIdAsyncSearch(int classId)
+        {
+            var categories = await _categoryRepository.GetCategoriesByClassIdAsyncSearch(classId);
+            return categories.Select(c => new CategoryDto
+            {
+                Id = c.category_id,
+                Name = c.name,
+                Description = c.description,
+                ClassId = c.class_id,
+                UploadedBy = c.uploaded_by,
+                UploadedByUsername = c.User?.username,
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.UpdatedAt,
+                IsDeleted = c.IsDeleted
             }).ToList();
         }
         public async Task<IEnumerable<ClassDto>> GetUsedClassesAsync()
@@ -149,6 +151,10 @@ namespace TaiLieuWebsiteBackend.Services
         public async Task<IEnumerable<CategorySimpleDto>> GetUsedCategoriesSimpleAsync(int? classId = null)
         {
             return await _categoryRepository.GetUsedCategoriesSimpleAsync(classId);
+        }
+        public async Task RestoreCategoryAsync(int id)
+        {
+            await _categoryRepository.RestoreCategoryAsync(id);
         }
     }
 }

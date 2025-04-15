@@ -108,8 +108,15 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            await _categoryService.DeleteCategoryAsync(id);
-            return NoContent();
+            try
+            {
+                await _categoryService.DeleteCategoryAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("search")]
@@ -129,6 +136,18 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
             return Ok(categories);
         }
+
+        [HttpGet("by-class-search/{classId}")]
+        public async Task<IActionResult> GetCategoriesByClassIdSearch(int classId)
+        {
+            var categories = await _categoryService.GetCategoriesByClassIdAsyncSearch(classId);
+            if (categories == null || !categories.Any())
+            {
+                return NotFound("Không tìm thấy danh mục nào cho classId này.");
+            }
+            return Ok(categories);
+        }
+
         [HttpGet("used-classes")]
         public async Task<IActionResult> GetUsedClasses()
         {
@@ -153,6 +172,19 @@ namespace TaiLieuWebsiteBackend.Controllers
         {
             var categories = await _categoryService.GetUsedCategoriesSimpleAsync(classId);
             return Ok(categories);
+        }
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreCategory(int id)
+        {
+            try
+            {
+                await _categoryService.RestoreCategoryAsync(id);
+                return Ok(new { message = "Khôi phục danh mục thành công!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

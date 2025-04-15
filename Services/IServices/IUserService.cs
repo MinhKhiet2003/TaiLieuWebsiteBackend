@@ -19,5 +19,6 @@ public interface IUserService
     Task<ApiResponse<object>> ChangePasswordAsync(int userId, string oldPassword, string newPassword);
     Task<IEnumerable<User>> SearchUsersAsync(string keyword);
     Task<bool> UsernameExistsAsync(string username);
+    Task<ApiResponse<object>> RestoreUserAsync(int id);
 }
 

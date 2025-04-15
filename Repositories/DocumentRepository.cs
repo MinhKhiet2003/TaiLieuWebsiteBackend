@@ -19,12 +19,18 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public IEnumerable<Document> GetAllDocuments()
         {
-            return _context.Documents.Include(d => d.Category).Include(d => d.User).OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt).ToList();
+            return _context.Documents
+                    .Where(d => !d.IsDeleted)
+                    .Include(d => d.Category)
+                    .Include(d => d.User)
+                    .OrderByDescending(d => d.UpdatedAt)
+                    .ThenByDescending(d => d.CreatedAt)
+                    .ToList();
         }
 
         public Document? GetDocumentById(int id)
         {
-            return _context.Documents.Include(d => d.Category).Include(d => d.User).FirstOrDefault(d => d.document_id == id);
+            return _context.Documents.Where(d => !d.IsDeleted).Include(d => d.Category).Include(d => d.User).FirstOrDefault(d => d.document_id == id);
         }
 
         public void AddDocument(Document document)
@@ -46,12 +52,18 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public void DeleteDocument(int id)
         {
-            var document = _context.Documents.Find(id);
-            if (document != null)
+            var document = _context.Documents.FirstOrDefault(d => d.document_id == id);
+            if (document == null)
             {
-                _context.Documents.Remove(document);
-                _context.SaveChanges();
+                throw new Exception("Tài liệu không tồn tại!");
             }
+
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+            document.IsDeleted = true;
+            document.UpdatedAt = currentTime;
+            _context.Documents.Update(document);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Document> GetDocumentsByUploaderUsername(string username)
@@ -61,7 +73,7 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public IEnumerable<Document> SearchDocuments(string? title = null, int? categoryId = null, string? uploadedByUsername = null)
         {
-            var query = _context.Documents.Include(d => d.Category).Include(d => d.User).AsQueryable();
+            var query = _context.Documents.Where(d => !d.IsDeleted).Include(d => d.Category).Include(d => d.User).AsQueryable();
 
             if (!string.IsNullOrEmpty(title))
             {
@@ -83,7 +95,7 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public async Task<IEnumerable<Document>> SearchDocumentsAsync(string? name, int? categoryId, int? classId)
         {
-            var query = _context.Documents
+            var query = _context.Documents.Where(d => !d.IsDeleted)
                         .Include(d => d.Category)
                         .Include(d => d.User)
                         .OrderByDescending(d => d.UpdatedAt).ThenByDescending(d => d.CreatedAt)
@@ -111,7 +123,7 @@ namespace TaiLieuWebsiteBackend.Repositories
         }
         public IEnumerable<Document> GetDocumentsByCategoryId(int categoryId)
         {
-            return _context.Documents
+            return _context.Documents.Where(d => !d.IsDeleted)
                 .Include(d => d.Category)
                 .Include(d => d.User)
                 .Where(d => d.category_id == categoryId)

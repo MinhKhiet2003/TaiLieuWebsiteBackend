@@ -34,7 +34,8 @@ namespace TaiLieuWebsiteBackend.Models
 
         [JsonIgnore]
         public ICollection<Category>? Categories { get; set; }
-        public ICollection<Star> Stars { get; set; }
+        [JsonIgnore]
+        public ICollection<Star>? Stars { get; set; }
 
     }
 }

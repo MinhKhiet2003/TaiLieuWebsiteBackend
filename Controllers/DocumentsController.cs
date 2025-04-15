@@ -98,9 +98,17 @@ namespace TaiLieuWebsiteBackend.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteDocument(int id)
         {
-            _documentService.DeleteDocument(id);
-            return NoContent();
+            try
+            {
+                _documentService.DeleteDocument(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
         [HttpGet("search")]
         public async Task<IActionResult> SearchDocuments(
             [FromQuery] string? name,
@@ -153,5 +161,6 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return StatusCode(500, new { message = "An error occurred while fetching documents.", error = ex.Message });
             }
         }
+
     }
 }

@@ -3,7 +3,7 @@
   <parameter name="IIS Web Application Name" description="" value="site21979" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Minh\ Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\obj\\Release\\net8\.0\\PubTmp\\Out\\$" />
   </parameter>
-  <parameter name="TaiLieuWebsiteBackend.Data.AppDbContext" description="" value="Server=20.70.160.71,1433;Database=TaiLieuWebsite;User Id=hachieve;Password=123456789Abc@;TrustServerCertificate=True;" tags="dbfullsql">
+  <parameter name="TaiLieuWebsiteBackend.Data.AppDbContext" description="" value="Server=db16899.public.databaseasp.net; Database=db16899; User Id=db16899; Password=xB_82zY#L6%m; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True;" tags="dbfullsql">
     <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\Minh\ Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\obj\\Release\\net8\.0\\PubTmp\\EFSQLScripts\\TaiLieuWebsiteBackend\.Data\.AppDbContext\.sql$" />
   </parameter>
 </parameters>

@@ -70,12 +70,17 @@ namespace TaiLieuWebsiteBackend.Repositories
 
         public async Task DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var category = _context.Categories.FirstOrDefault(d => d.category_id == id);
+            if (category == null)
             {
-                _context.Categories.Remove(category);
-                await _context.SaveChangesAsync();
+                throw new Exception("Chủ đề không tồn tại!");
             }
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+            category.IsDeleted = true;
+            category.UpdatedAt = currentTime;
+            _context.Categories.Update(category);
+            _context.SaveChanges();
         }
 
 
@@ -85,31 +90,18 @@ namespace TaiLieuWebsiteBackend.Repositories
                 .Where(c => c.name.ToLower().Contains(keyword.ToLower()))
                 .ToListAsync();
         }
-
-        public async Task<Category> GetCategoryByNameAsync(string name)
-        {
-            return await _context.Categories
-                .FirstOrDefaultAsync(c => c.name.ToLower() == name.ToLower());
-        }
-
         public async Task<IEnumerable<Category>> GetCategoriesByClassIdAsync(int classId)
+        {
+            return await _context.Categories.Where(c => !c.IsDeleted).Include(c => c.User)
+                .Where(c => c.class_id == classId)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Category>> GetCategoriesByClassIdAsyncSearch(int classId)
         {
             return await _context.Categories.Include(c => c.User)
                 .Where(c => c.class_id == classId)
                 .ToListAsync();
         }
-
-        public async Task<Category> GetCategoryByNameAndClassAsync(string name, int classId)
-        {
-            return await _context.Categories
-                .FirstOrDefaultAsync(c => c.name.ToLower() == name.ToLower() && c.class_id == classId);
-        }
-
-        public async Task<Category> GetCategoryByName(string name)
-        {
-            return await _context.Categories.FirstOrDefaultAsync(c => c.name.ToLower() == name.ToLower());
-        }
-
         public async Task<IEnumerable<Class>> GetUsedClassesAsync()
         {
             return await _context.Categories
@@ -172,6 +164,27 @@ namespace TaiLieuWebsiteBackend.Repositories
                     Name = c.name
                 })
                 .ToListAsync();
+        }
+        public async Task RestoreCategoryAsync(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.category_id == id);
+            if (category == null)
+            {
+                throw new Exception("Danh mục không tồn tại!");
+            }
+
+            if (!category.IsDeleted)
+            {
+                throw new Exception("Danh mục chưa bị xóa, không thể khôi phục!");
+            }
+
+            var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+            category.IsDeleted = false;
+            category.UpdatedAt = currentTime;
+
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
         }
     }
 }
