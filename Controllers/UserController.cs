@@ -5,6 +5,7 @@ using TaiLieuWebsiteBackend.Models;
 using TaiLieuWebsiteBackend.Services;
 using TaiLieuWebsiteBackend.Dtos;
 using TaiLieuWebsiteBackend.Response;
+using TaiLieuWebsiteBackend.Services.IServices;
 
 namespace TaiLieuWebsiteBackend.Controllers
 {
@@ -15,10 +16,13 @@ namespace TaiLieuWebsiteBackend.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly IEmailService _emailService;
+        private readonly IOtpService _otpService;
+        public UserController(IUserService userService, IEmailService emailService, IOtpService otpService)
         {
             _userService = userService;
+            _emailService = emailService;
+            _otpService = otpService;
         }
 
         // GET: api/User
@@ -286,6 +290,74 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return StatusCode(response.StatusCode, new { success = false, error = response.ErrorMessage });
 
             return Ok(new { success = true, message = "Khôi phục thành công" });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Check if email exists
+            if (!await _userService.EmailExistsAsync(forgotPasswordDto.Email))
+            {
+                return BadRequest(new { success = false, message = "Email chưa được đăng ký." });
+            }
+
+            // Generate OTP
+            var otp = _otpService.GenerateOtp();
+
+            // Store OTP
+            await _otpService.StoreOtpAsync(forgotPasswordDto.Email, otp);
+
+            // Send email
+            var emailSubject = "Password Reset OTP";
+            var emailMessage = $"Your OTP for password reset is: {otp}. This OTP is valid for 5 minutes.";
+
+            try
+            {
+                await _emailService.SendEmailAsync(forgotPasswordDto.Email, emailSubject, emailMessage);
+                return Ok(new { success = true, message = "OTP đã được gửi đến email của bạn." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Gửi OTP thất bại.", error = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Verify OTP
+            var isOtpValid = await _otpService.VerifyOtpAsync(resetPasswordDto.Email, resetPasswordDto.OTP);
+            if (!isOtpValid)
+            {
+                return BadRequest(new { success = false, message = "Invalid or expired OTP." });
+            }
+
+            // Get user by email
+            var userResponse = await _userService.GetUserByUsernameOrEmailAsync(resetPasswordDto.Email);
+            if (userResponse.StatusCode != 200)
+            {
+                return BadRequest(new { success = false, message = "User not found." });
+            }
+
+            // Update password
+            var user = userResponse.Data;
+            user.password_hash = resetPasswordDto.NewPassword;
+
+            var updateResponse = await _userService.UpdateUserAsync(user);
+            if (updateResponse.StatusCode != 200)
+            {
+                return StatusCode(updateResponse.StatusCode, new { success = false, message = updateResponse.ErrorMessage });
+            }
+
+            return Ok(new { success = true, message = "Password has been reset successfully." });
         }
     }
 }

@@ -113,6 +113,9 @@ builder.Services.AddScoped<IComicRepository, ComicRepository>();
 builder.Services.AddScoped<IComicService, ComicService>();
 builder.Services.AddScoped<IStarRepository, StarRepository>();
 builder.Services.AddScoped<IStarService, StarService>();
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<IOtpService, OtpService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddAutoMapper(typeof(Program));

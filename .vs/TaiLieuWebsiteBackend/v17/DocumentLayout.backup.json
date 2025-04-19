@@ -3,36 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\otpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\iservices\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\iservices\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\commentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\commentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\commentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\commentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\iservices\\icommentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\iservices\\icommentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\comiccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\comiccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\dtos\\commentupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:dtos\\commentupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\repositories\\irepositories\\icommentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:repositories\\irepositories\\icommentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:controllers\\commentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|c:\\users\\minh khiet\\source\\repos\\tailieuwebsitebackend\\tailieuwebsitebackend\\services\\iservices\\iotpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE4B181E-394B-41E9-B1EC-FCA04969203F}|TaiLieuWebsiteBackend.csproj|solutionrelative:services\\iservices\\iotpservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,60 +46,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 10,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ComicController.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\ComicController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ComicController.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\ComicController.cs",
-              "RelativeToolTip": "Controllers\\ComicController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:30:57.842Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAEwA0AAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:30:30.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ICommentService.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\ICommentService.cs",
-              "RelativeDocumentMoniker": "Services\\IServices\\ICommentService.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\ICommentService.cs",
-              "RelativeToolTip": "Services\\IServices\\ICommentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:28:22.862Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ICommentRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\IRepositories\\ICommentRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\IRepositories\\ICommentRepository.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\IRepositories\\ICommentRepository.cs",
-              "RelativeToolTip": "Repositories\\IRepositories\\ICommentRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvxoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:28:06.113Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
@@ -106,54 +58,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CommentRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\CommentRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\CommentRepository.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\CommentRepository.cs",
-              "RelativeToolTip": "Repositories\\CommentRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAqAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAOcAAAAAAAAAAAAswBIBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:25:19.963Z",
+              "WhenOpened": "2025-04-19T09:36:03.068Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CommentService.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\CommentService.cs",
-              "RelativeDocumentMoniker": "Services\\CommentService.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\CommentService.cs",
-              "RelativeToolTip": "Services\\CommentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:25:10.213Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CommentUpdateDto.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\CommentUpdateDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\CommentUpdateDto.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Dtos\\CommentUpdateDto.cs",
-              "RelativeToolTip": "Dtos\\CommentUpdateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:15:38.442Z",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-19T09:19:39.502Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "CommentsController.cs",
-              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\CommentsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CommentsController.cs",
-              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\CommentsController.cs",
-              "RelativeToolTip": "Controllers\\CommentsController.cs",
-              "ViewState": "AgIAAHwAAAAAAAAAAAAQwI8AAAABAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T17:14:46.32Z",
+              "WhenOpened": "2025-04-19T09:07:16.355Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OtpService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\OtpService.cs",
+              "RelativeDocumentMoniker": "Services\\OtpService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\OtpService.cs",
+              "RelativeToolTip": "Services\\OtpService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:44:14.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IOtpService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\IOtpService.cs",
+              "RelativeDocumentMoniker": "Services\\IServices\\IOtpService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\IOtpService.cs",
+              "RelativeToolTip": "Services\\IServices\\IOtpService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:43:52.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\EmailService.cs",
+              "RelativeToolTip": "Services\\EmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:40:43.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\IEmailService.cs",
+              "RelativeDocumentMoniker": "Services\\IServices\\IEmailService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\IServices\\IEmailService.cs",
+              "RelativeToolTip": "Services\\IServices\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:40:21.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Services\\UserService.cs",
+              "RelativeToolTip": "Services\\UserService.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAwK8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:37:28.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Minh Khiet\\source\\repos\\TaiLieuWebsiteBackend\\TaiLieuWebsiteBackend\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Controllers\\UserController.cs",
+              "ViewState": "AgIAAEwBAAAAAAAAAAAAAGkBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T08:35:38.454Z",
               "EditorCaption": ""
             }
           ]

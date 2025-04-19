@@ -20,5 +20,6 @@ public interface IUserService
     Task<IEnumerable<User>> SearchUsersAsync(string keyword);
     Task<bool> UsernameExistsAsync(string username);
     Task<ApiResponse<object>> RestoreUserAsync(int id);
+    Task<ApiResponse<User>> GetUserByUsernameOrEmailAsync(string usernameOrEmail);
 }
 

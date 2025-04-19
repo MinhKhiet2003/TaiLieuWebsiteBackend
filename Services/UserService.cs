@@ -168,5 +168,9 @@ namespace TaiLieuWebsiteBackend.Services
         {
             return await _userRepository.RestoreUserAsync(id);
         }
+        public async Task<ApiResponse<User>> GetUserByUsernameOrEmailAsync(string usernameOrEmail)
+        {
+            return await _userRepository.GetUserByUsernameOrEmailAsync(usernameOrEmail);
+        }
     }
 }
