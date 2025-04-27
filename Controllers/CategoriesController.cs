@@ -20,6 +20,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _categoryService = categoryService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -27,6 +28,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(categories);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
@@ -119,6 +121,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchCategories([FromQuery] string keyword)
         {
@@ -126,6 +129,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(categories);
         }
 
+        [AllowAnonymous]
         [HttpGet("by-class/{classId}")]
         public async Task<IActionResult> GetCategoriesByClassId(int classId)
         {
@@ -137,6 +141,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(categories);
         }
 
+        [AllowAnonymous]
         [HttpGet("by-class-search/{classId}")]
         public async Task<IActionResult> GetCategoriesByClassIdSearch(int classId)
         {
@@ -148,18 +153,23 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(categories);
         }
 
+        [AllowAnonymous]
         [HttpGet("used-classes")]
         public async Task<IActionResult> GetUsedClasses()
         {
             var classes = await _categoryService.GetUsedClassesAsync();
             return Ok(classes);
         }
+
+        [AllowAnonymous]
         [HttpGet("count-by-class")]
         public async Task<IActionResult> CountCategoriesByClass()
         {
             var counts = await _categoryService.CountCategoriesByClassAsync();
             return Ok(counts);
         }
+
+        [AllowAnonymous]
         [HttpGet("used-by-type")]
         public async Task<IActionResult> GetUsedCategoriesByResourceType([FromQuery] string resourceType, [FromQuery] int? classId)
         {
@@ -167,12 +177,15 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(categories);
         }
 
+        [AllowAnonymous]
         [HttpGet("used-simple")]
         public async Task<IActionResult> GetUsedCategoriesSimple([FromQuery] int? classId)
         {
             var categories = await _categoryService.GetUsedCategoriesSimpleAsync(classId);
             return Ok(categories);
         }
+
+
         [HttpPut("restore/{id}")]
         public async Task<IActionResult> RestoreCategory(int id)
         {

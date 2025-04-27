@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.DTOs;
@@ -45,6 +46,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("user")]
         public async Task<IActionResult> GetRatingByUserAndContent(
             [FromQuery] int userId,
@@ -68,6 +70,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("averageByContentType")]
         public async Task<IActionResult> GetAverageRatingsByContentType([FromQuery] string contentType)
         {
@@ -82,6 +85,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetRatings([FromQuery] int? documentId = null,
             [FromQuery] int? exerciseId = null, [FromQuery] int? gameId = null,
@@ -98,6 +102,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("average")]
         public async Task<IActionResult> GetAverageRating([FromQuery] int? documentId = null,
             [FromQuery] int? exerciseId = null, [FromQuery] int? gameId = null,

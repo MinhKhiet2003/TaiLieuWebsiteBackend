@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaiLieuWebsiteBackend.Models;
@@ -16,7 +17,7 @@ namespace TaiLieuWebsiteBackend.Controllers
         {
             _classService = classService;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllClasses()
         {

@@ -62,7 +62,7 @@ namespace TaiLieuWebsiteBackend.Services
             var user = new User
             {
                 username = userRegisterDto.Username,
-                password_hash = userRegisterDto.Password, // Sẽ được hash trong AddUserAsync
+                password_hash = _passwordHasher.HashPassword(userRegisterDto.Password),
                 email = userRegisterDto.Email,
                 role = userRegisterDto.Role ?? "user",
                 CreatedAt = currentTime,

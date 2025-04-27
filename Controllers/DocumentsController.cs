@@ -24,6 +24,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<DocumentDto>> GetAllDocuments()
         {
@@ -31,6 +32,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(documents);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<DocumentDto> GetDocumentById(int id)
         {
@@ -41,6 +43,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
             return Ok(document);
         }
+
         [HttpPost]
         public ActionResult AddDocument([FromBody] CreateUpdateDocumentDto documentDto)
         {
@@ -109,6 +112,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchDocuments(
             [FromQuery] string? name,
@@ -144,6 +148,8 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             return Ok(documents);
         }
+
+        [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public ActionResult<IEnumerable<DocumentDto>> GetDocumentsByCategoryId(int categoryId)
         {

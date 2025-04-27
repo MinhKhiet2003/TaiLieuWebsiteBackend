@@ -27,6 +27,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<VideoDto>> GetAllVideos()
         {
@@ -34,6 +35,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(videos);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<VideoDto> GetVideoById(int id)
         {
@@ -129,6 +131,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchVideos(
             [FromQuery] string? name,
@@ -164,6 +167,8 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             return Ok(videos);
         }
+
+        [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<VideoDto>>> GetVideosByCategoryId(int categoryId)
         {

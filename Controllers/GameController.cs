@@ -33,6 +33,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _commentRepository = commentRepository;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetAllGames()
         {
@@ -40,6 +41,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(games);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<GameDto>> GetGameById(int id)
         {
@@ -128,6 +130,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchGames(
             [FromQuery] string? name,
@@ -138,6 +141,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             var games = await _gameService.SearchGamesAsync(name, categoryId, classId, classify);
             return Ok(games);
         }
+
         [AllowAnonymous]
         [HttpGet("random")]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetRandomGames()
@@ -164,6 +168,8 @@ namespace TaiLieuWebsiteBackend.Controllers
 
             return Ok(games);
         }
+
+        [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<GameDto>>> GetGamesByCategoryId(int categoryId)
         {

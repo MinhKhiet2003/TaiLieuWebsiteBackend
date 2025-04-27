@@ -25,6 +25,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _commentRepository = commentRepository; // Khởi tạo
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ComicDto>>> GetAllComics()
         {
@@ -32,6 +33,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(comics);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<ComicDto>> GetComicById(int id)
         {
@@ -111,6 +113,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchComics(
             [FromQuery] string? title,
@@ -128,6 +131,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<ComicDto>>> GetComicsByCategoryId(int categoryId)
         {
@@ -146,6 +150,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             }
         }
 
+        [AllowAnonymous]
         // Thêm endpoint để lấy danh sách comment theo comicId
         [HttpGet("{comicId}/comments")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByComicId(int comicId)
@@ -154,6 +159,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(comments);
         }
 
+        [AllowAnonymous]
         // Thêm endpoint để đếm số lượng comment theo comicId
         [HttpGet("{comicId}/comments/count")]
         public async Task<ActionResult<int>> GetCommentCountByComicId(int comicId)

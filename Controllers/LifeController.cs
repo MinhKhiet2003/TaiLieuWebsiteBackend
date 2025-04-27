@@ -22,6 +22,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             _lifeService = lifeService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<LifeDto>> GetAllLifes()
         {
@@ -29,6 +30,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(lives);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<LifeDto> GetLifeById(int id)
         {
@@ -113,6 +115,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<IActionResult> SearchLives(
     [FromQuery] string? question,
@@ -130,6 +133,8 @@ namespace TaiLieuWebsiteBackend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [AllowAnonymous]
         [HttpGet("questionset/{questionSet}")]
         public ActionResult<IEnumerable<LifeDto>> GetLifesByQuestionSet(int questionSet)
         {
@@ -137,6 +142,7 @@ namespace TaiLieuWebsiteBackend.Controllers
             return Ok(lives);
         }
 
+        [AllowAnonymous]
         [HttpGet("questionsets")]
         public ActionResult<IEnumerable<int>> GetUniqueQuestionSets()
         {
